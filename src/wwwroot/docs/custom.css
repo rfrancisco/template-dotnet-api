@@ -1,0 +1,119 @@
+.topbar {
+    background: #5f6368 !important;
+}
+
+.select-label > span {
+    color: #fff !important;
+}
+
+.swagger-ui .wrapper {
+    padding: 0 !important;
+}
+
+.topbar-wrapper {
+    margin: auto;
+    max-width: 1000px;
+}
+
+.topbar-wrapper > a > img {
+    content: url(logo.png) !important;
+    height: 65px !important;
+    margin: -15px 0;
+}
+
+.topbar-wrapper > a > span {
+    display: none;
+}
+
+.swagger-ui .scheme-container {
+    padding: 15px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: transparent;
+    box-shadow: none;
+    border: 0;
+}
+
+.swagger-ui .auth-wrapper .authorize {
+    margin-right: 0;
+}
+
+.swagger-ui .opblock {
+    border-radius: 2px;
+}
+
+.swagger-ui .opblock .opblock-summary-path {
+    font-size: 14px;
+}
+
+.swagger-ui .opblock .opblock-summary-description {
+    text-align: end;
+}
+
+.swagger-ui .opblock-tag {
+    border: 0;
+    margin: 0;
+    padding: 15px 0;
+    font-size: 18px;
+}
+
+.swagger-ui .opblock-tag:hover {
+    background: transparent;
+}
+
+.topbar + .swagger-ui {
+    margin: auto;
+    max-width: 1000px;
+    position: relative;
+}
+
+.swagger-ui .info {
+    margin: 15px 0;
+    padding: 15px;
+}
+
+.swagger-ui .info .title {
+    font-size: 28px;
+}
+
+.information-container {
+    margin: 0 0 20px;
+    padding: 30px 0;
+    background: #fff;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.15);
+}
+
+.opblock-tag-section {
+    margin: 0 0 15px;
+    padding: 0px 15px;
+    background: #fff;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.15);
+}
+
+.swagger-ui .expand-methods svg,
+.swagger-ui .expand-operation svg {
+    width: 16px;
+    height: 16px;
+}
+
+.swagger-ui section.models .model-container {
+    margin: 15px 15px 0 15px;
+    border-radius: 2px;
+}
+
+.swagger-ui section.models .model-container:first-of-type {
+    margin: 15px;
+}
+
+.swagger-ui section.models .model-container:last-of-type {
+    margin: 15px 15px 0 15px;
+}
+
+.swagger-ui .model-box {
+    padding: 5px;
+}
+
+.swagger-ui .model-box .model-title {
+    font-size: 14px;
+}

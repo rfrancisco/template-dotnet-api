@@ -1,0 +1,19 @@
+- Exception handling middleware
+- Create a shared dll
+- Add Dummy Authentication
+- Add Lis Authentication
+- Replace DbDeleteHard with smart DbDelete
+- Implement the logic in BaseAuditableService in BaseService (may be tricky because of IContextProvider)
+- Create bash script to perform the necessary replacements
+- Configure health checks
+- Configure health checks ui
+- Place migrations in separate assembly (see activity plan)
+- Tests (see emel and activity plan)
+- Add support to Encrypt/Decrypt configurations
+- Example pipelines (cr provider and k8s provider)
+
+
+- Script para configurar:
+    - What is the name of the project (without spaces of hyphens)
+    - Do you want to include tests?
+    - Do you want to custumize swagger ui?

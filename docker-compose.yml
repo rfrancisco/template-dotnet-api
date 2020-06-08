@@ -1,0 +1,17 @@
+############################################################
+# This docker-compose script can be used to execute all the
+# dependencies needed to run and test the project locally.
+############################################################
+version: "3"
+services:
+  # Starts the postgres database containing our business entities.
+  # Also creates schema and seed data for our database.
+  postgres:
+    image: "mdillon/postgis:latest"
+    environment:
+      POSTGRES_USER: projectName-dev
+      POSTGRES_DB: projectName-dev
+      POSTGRES_PASSWORD: 1qaz2wsX
+      SQL_DATABASE_SERVER: localhost
+    ports:
+      - "5432:5432"
