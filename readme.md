@@ -148,15 +148,3 @@ To do this we need to drop the existing database and recreate by applying all ex
 $ dotnet ef database drop -f; rm -rf Migrations -f; dotnet ef migrations add Initial; dotnet ef database update;
 ~~~
 
-## Generate service references from WSDL
-
-~~~sh
- # Install tool for ServiceReference generation
- # NOTE: currently this tool required dotnet 2.1 to run
- dotnet tool install --global dotnet-svcutil
- ~~~
-
- ~~~sh
- # Tool usage
- ${PROJECT_DIR}/src dotnet-svcutil http://www.soapservice.com?wsdl
- ~~~
