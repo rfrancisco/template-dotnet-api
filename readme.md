@@ -1,7 +1,7 @@
 # First things to do
 
 * Perform a case sensitive find by 'ProjectName' and perform a replace-all with 'The_name_you_wish_for_the_project>'.
-  This will replace all namespaces from 'ProjectName.Api.*' with (if you replace with Uefa.Vista) 'Uefa.Vista.Api'.
+  This will replace all namespaces from 'ProjectName.Api.*' with (if you replace with Uefa.Vista) to 'Uefa.Vista.Api'.
 
 # ProjectName Api
 
