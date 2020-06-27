@@ -31,6 +31,7 @@ namespace ProjectRootNamespace.Api
             services.AddHealthChecks().AddDbContextCheck<MainDbContext>();
             services.AddControllers();
             services.AddCoreServices();
+            services.AddCustomExceptionHandler();
         }
 
         // This method gets called by the runtime.
@@ -45,6 +46,7 @@ namespace ProjectRootNamespace.Api
             app.UseSerilogRequestLogging();
             app.UseSwagger();
             app.UseRouting();
+            app.UseCustomExceptionHandler();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHealthChecks("/health");

@@ -1,4 +1,3 @@
-- Exception handling middleware
 - Create a shared dll
 - Add Dummy Authentication
 - Add Lis Authentication
