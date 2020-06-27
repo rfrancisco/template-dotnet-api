@@ -1,7 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using ProjectRootNamespace.Api.DataAccess;
 using ProjectRootNamespace.Api.DataAccess.Entities;
 using ProjectRootNamespace.Api.Infrastructure;
@@ -10,8 +8,8 @@ namespace ProjectRootNamespace.Api.Services
 {
     public interface IProductsService
     {
-        Task<IEnumerable<ProductListDTO>> FindMany();
         Task<ProductDTO> Find(int id);
+        Task<PagedResultsDTO<ProductListDTO>> FindMany(int page = 0, int pageSize = 0);
         Task<ProductDTO> Create(ProductCreateDTO model);
         Task Update(int id, ProductUpdateDTO model);
         Task Delete(int id);
@@ -19,18 +17,8 @@ namespace ProjectRootNamespace.Api.Services
 
     public class ProductsService : BaseService<Product, int>, IProductsService
     {
-        private readonly ILogger<ProductsService> _logger;
-
-        public ProductsService(
-            MainDbContext dbContext,
-            ILogger<ProductsService> logger) : base(dbContext)
+        public ProductsService(MainDbContext dbContext) : base(dbContext)
         {
-            _logger = logger;
-        }
-
-        public async Task<IEnumerable<ProductListDTO>> FindMany()
-        {
-            return await DbFindMany(x => new ProductListDTO(x));
         }
 
         public async Task<ProductDTO> Find(int id)
@@ -38,8 +26,16 @@ namespace ProjectRootNamespace.Api.Services
             return new ProductDTO(await DbFind(x => x.Id == id));
         }
 
+        public async Task<PagedResultsDTO<ProductListDTO>> FindMany(int page = 0, int pageSize = 0)
+        {
+            return await DbFindMany(x => new ProductListDTO(x), page, pageSize);
+        }
+
         public async Task<ProductDTO> Create(ProductCreateDTO model)
         {
+            if (await DbExists(x => x.Name.ToLower().Trim() == model.Name.ToLower().Trim()))
+                throw new ApiValidationException("DUPLICATE_NAME", "A record with the same name already exists");
+
             var dbRecord = new Product()
             {
                 Name = model.Name,
@@ -54,8 +50,10 @@ namespace ProjectRootNamespace.Api.Services
 
         public async Task Update(int id, ProductUpdateDTO model)
         {
-            var dbRecord = await DbFind(x => x.Id == id);
+            if (await DbExists(x => x.Name.ToLower().Trim() == model.Name.ToLower().Trim() && x.Id != id))
+                throw new ApiValidationException("DUPLICATE_NAME", "A record with the same name already exists");
 
+            var dbRecord = await DbFind(x => x.Id == id);
             dbRecord.Name = model.Name;
             dbRecord.Description = model.Description;
             dbRecord.Price = model.Price;

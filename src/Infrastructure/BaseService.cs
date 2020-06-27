@@ -282,8 +282,10 @@ namespace ProjectRootNamespace.Api.Infrastructure
     {
         public int Page { get; set; }
         public int TotalPages { get; set; }
-        public List<M> Records { get; set; }
         public int TotalRecords { get; set; }
+        public bool HasPreviousPage => Page > 1;
+        public bool HasNextPage => Page < TotalPages;
+        public List<M> Records { get; set; }
 
         public PagedResultsDTO()
         {
@@ -295,16 +297,6 @@ namespace ProjectRootNamespace.Api.Infrastructure
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
             Records = items;
             TotalRecords = count;
-        }
-
-        public bool HasPreviousPage
-        {
-            get { return (Page > 1); }
-        }
-
-        public bool HasNextPage
-        {
-            get { return (Page < TotalPages); }
         }
     }
 

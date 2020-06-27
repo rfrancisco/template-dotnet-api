@@ -15,7 +15,8 @@ namespace ProjectRootNamespace.Api.Infrastructure
         private static ApiExceptionData GetExceptionData(ModelStateDictionary context)
         {
             var errors = context.Where(e => e.Value.Errors.Count > 0)
-                                .Select(e => new { Name = e.Key, Message = e.Value.Errors.First().ErrorMessage }).ToArray();
+                                .Select(e => new { Name = e.Key, Message = e.Value.Errors.First().ErrorMessage })
+                                .ToArray();
 
             var retVal = new ApiExceptionData();
             retVal.StatusCode = 400;

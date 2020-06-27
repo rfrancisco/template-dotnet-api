@@ -1,12 +1,14 @@
-- Create a shared dll
+- Add paging example
 - Add Dummy Authentication
+- Tests (see emel and activity plan)
+- Add support to Encrypt/Decrypt configurations
+
+- Create a shared dll
 - Add Lis Authentication
 - Implement the logic in BaseAuditableService in BaseService (may be tricky because of IContextProvider)
 - Create bash script to perform the necessary replacements
 - Configure health checks ui
 - Place migrations in separate assembly (see activity plan)
-- Tests (see emel and activity plan)
-- Add support to Encrypt/Decrypt configurations
 - Example pipelines (cr provider and k8s provider)
 
 
