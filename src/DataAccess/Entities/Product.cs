@@ -1,10 +1,10 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using ProjectName.Api.Infrastructure.DataAccess;
+using ProjectRootNamespace.Api.Infrastructure.DataAccess;
 
-namespace ProjectName.Api.DataAccess.Entities
+namespace ProjectRootNamespace.Api.DataAccess.Entities
 {
-    public class Product : IDeletableEntity, IIdentityEntity<int>
+    public class Product : ISoftDeletableEntity, IIdentityEntity<int>
     {
         [Key]
         public int Id { get; set; }

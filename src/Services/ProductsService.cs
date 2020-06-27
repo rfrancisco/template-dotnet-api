@@ -2,19 +2,19 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using ProjectName.Api.DataAccess;
-using ProjectName.Api.DataAccess.Entities;
-using ProjectName.Api.Infrastructure;
+using ProjectRootNamespace.Api.DataAccess;
+using ProjectRootNamespace.Api.DataAccess.Entities;
+using ProjectRootNamespace.Api.Infrastructure;
 
-namespace ProjectName.Api.Services
+namespace ProjectRootNamespace.Api.Services
 {
     public interface IProductsService
     {
-        Task<IEnumerable<ProductListModel>> GetMany();
-        Task<ProductModel> Get(int productId);
-        Task<ProductModel> Create(ProductCreateModel model);
-        Task Update(int productId, ProductUpdateModel model);
-        Task Delete(int productId);
+        Task<IEnumerable<ProductListDTO>> FindMany();
+        Task<ProductDTO> Find(int id);
+        Task<ProductDTO> Create(ProductCreateDTO model);
+        Task Update(int id, ProductUpdateDTO model);
+        Task Delete(int id);
     }
 
     public class ProductsService : BaseService<Product, int>, IProductsService
@@ -28,17 +28,17 @@ namespace ProjectName.Api.Services
             _logger = logger;
         }
 
-        public async Task<IEnumerable<ProductListModel>> GetMany()
+        public async Task<IEnumerable<ProductListDTO>> FindMany()
         {
-            return await DbGetMany(x => new ProductListModel(x));
+            return await DbFindMany(x => new ProductListDTO(x));
         }
 
-        public async Task<ProductModel> Get(int productId)
+        public async Task<ProductDTO> Find(int id)
         {
-            return new ProductModel(await DbGet(x => x.Id == productId));
+            return new ProductDTO(await DbFind(x => x.Id == id));
         }
 
-        public async Task<ProductModel> Create(ProductCreateModel model)
+        public async Task<ProductDTO> Create(ProductCreateDTO model)
         {
             var dbRecord = new Product()
             {
@@ -49,12 +49,12 @@ namespace ProjectName.Api.Services
                 Deleted = false,
             };
 
-            return await Get((await DbCreate(dbRecord)).Id);
+            return await Find((await DbCreate(dbRecord)).Id);
         }
 
-        public async Task Update(int productId, ProductUpdateModel model)
+        public async Task Update(int id, ProductUpdateDTO model)
         {
-            var dbRecord = await DbGet(x => x.Id == productId);
+            var dbRecord = await DbFind(x => x.Id == id);
 
             dbRecord.Name = model.Name;
             dbRecord.Description = model.Description;
@@ -64,15 +64,15 @@ namespace ProjectName.Api.Services
             await DbUpdate(dbRecord);
         }
 
-        public async Task Delete(int productId)
+        public async Task Delete(int id)
         {
-            await DbDelete(x => x.Id == productId);
+            await DbDelete(x => x.Id == id);
         }
     }
 
-    #region Models
+    #region DTOs
 
-    public class ProductModel
+    public class ProductDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -80,9 +80,9 @@ namespace ProjectName.Api.Services
         public double Price { get; set; }
         public int Stock { get; set; }
 
-        public ProductModel() { }
+        public ProductDTO() { }
 
-        public ProductModel(Product source)
+        public ProductDTO(Product source)
         {
             Id = source.Id;
             Name = source.Name;
@@ -92,14 +92,14 @@ namespace ProjectName.Api.Services
         }
     }
 
-    public class ProductListModel : ProductModel
+    public class ProductListDTO : ProductDTO
     {
-        public ProductListModel(Product source) : base(source)
+        public ProductListDTO(Product source) : base(source)
         {
         }
     }
 
-    public class ProductCreateModel
+    public class ProductCreateDTO
     {
         [Required]
         [MaxLength(64)]
@@ -116,7 +116,7 @@ namespace ProjectName.Api.Services
         public int Stock { get; set; }
     }
 
-    public class ProductUpdateModel
+    public class ProductUpdateDTO
     {
         [Required]
         [MaxLength(64)]

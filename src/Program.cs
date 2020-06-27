@@ -1,10 +1,10 @@
 using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using ProjectName.Api.Infrastructure;
+using ProjectRootNamespace.Api.Infrastructure;
 using Serilog;
 
-namespace ProjectName.Api
+namespace ProjectRootNamespace.Api
 {
     public class Program
     {

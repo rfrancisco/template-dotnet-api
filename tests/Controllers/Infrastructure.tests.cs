@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 
-namespace ProjectName.Api.Tests
+namespace ProjectRootNamespace.Api.Tests
 {
     public class BasicTests : IClassFixture<WebApplicationFactory<Startup>>
     {

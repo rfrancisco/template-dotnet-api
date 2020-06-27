@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using ProjectName.Api.DataAccess;
+using ProjectRootNamespace.Api.DataAccess;
 using System.Linq;
 using System.Linq.Expressions;
-using ProjectName.Api.Infrastructure.DataAccess;
+using ProjectRootNamespace.Api.Infrastructure.DataAccess;
 
-namespace ProjectName.Api.Infrastructure
+namespace ProjectRootNamespace.Api.Infrastructure
 {
     public abstract class BaseService<T, IKey> where T : class, IIdentityEntity<IKey>
     {
@@ -22,27 +22,27 @@ namespace ProjectName.Api.Infrastructure
 
         protected virtual IQueryable<T> GetManyQuery => _baseQuery;
 
-        protected async Task<IEnumerable<T>> DbGetMany()
+        protected async Task<IEnumerable<T>> DbFindMany()
         {
             return await GetManyQuery
                 .ToListAsync();
         }
 
-        protected async Task<IEnumerable<M>> DbGetMany<M>(Expression<Func<T, M>> selector)
+        protected async Task<IEnumerable<M>> DbFindMany<M>(Expression<Func<T, M>> selector)
         {
             return await GetManyQuery
                 .Select(selector)
                 .ToListAsync();
         }
 
-        protected async Task<IEnumerable<T>> DbGetMany(Expression<Func<T, bool>> where)
+        protected async Task<IEnumerable<T>> DbFindMany(Expression<Func<T, bool>> where)
         {
             return await GetManyQuery
                 .Where(where)
                 .ToListAsync();
         }
 
-        protected async Task<IEnumerable<M>> DbGetMany<M>(Expression<Func<T, bool>> where, Expression<Func<T, M>> selector)
+        protected async Task<IEnumerable<M>> DbFindMany<M>(Expression<Func<T, bool>> where, Expression<Func<T, M>> selector)
         {
             var query = GetManyQuery;
 
@@ -54,7 +54,7 @@ namespace ProjectName.Api.Infrastructure
                 .ToListAsync();
         }
 
-        protected async Task<IEnumerable<M>> DbGetMany<M, TKey>(Expression<Func<T, bool>> where, Expression<Func<T, M>> selector, Expression<Func<T, TKey>> orderBy)
+        protected async Task<IEnumerable<M>> DbFindMany<M, TKey>(Expression<Func<T, bool>> where, Expression<Func<T, M>> selector, Expression<Func<T, TKey>> orderBy)
         {
             var query = GetManyQuery;
 
@@ -66,7 +66,7 @@ namespace ProjectName.Api.Infrastructure
                 .Select(selector)
                 .ToListAsync();
         }
-        protected async Task<IEnumerable<M>> DbGetManyDescending<M, TKey>(Expression<Func<T, bool>> where, Expression<Func<T, M>> selector, Expression<Func<T, TKey>> orderBy)
+        protected async Task<IEnumerable<M>> DbFindManyDescending<M, TKey>(Expression<Func<T, bool>> where, Expression<Func<T, M>> selector, Expression<Func<T, TKey>> orderBy)
         {
             var query = GetManyQuery;
 
@@ -79,7 +79,7 @@ namespace ProjectName.Api.Infrastructure
                 .ToListAsync();
         }
 
-        protected async Task<PagedResults<M>> DbGetManyDescending<M, TKey>(Expression<Func<T, bool>> where, Expression<Func<T, M>> selector, Expression<Func<T, TKey>> orderBy, int page, int pageSize)
+        protected async Task<PagedResultsDTO<M>> DbFindManyDescending<M, TKey>(Expression<Func<T, bool>> where, Expression<Func<T, M>> selector, Expression<Func<T, TKey>> orderBy, int page, int pageSize)
         {
             if (page == 0)
                 page = 1;
@@ -94,10 +94,10 @@ namespace ProjectName.Api.Infrastructure
             var count = await query.CountAsync();
             var items = await query.OrderByDescending(orderBy).Skip((page - 1) * pageSize).Take(pageSize).Select(selector).ToListAsync();
 
-            return new PagedResults<M>(items, count, page, pageSize);
+            return new PagedResultsDTO<M>(items, count, page, pageSize);
         }
 
-        protected async Task<PagedResults<T>> DbGetMany(int page, int pageSize)
+        protected async Task<PagedResultsDTO<T>> DbFindMany(int page, int pageSize)
         {
             if (page == 0)
                 page = 1;
@@ -108,10 +108,10 @@ namespace ProjectName.Api.Infrastructure
             var count = await GetManyQuery.CountAsync();
             var items = await GetManyQuery.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
 
-            return new PagedResults<T>(items, count, page, pageSize);
+            return new PagedResultsDTO<T>(items, count, page, pageSize);
         }
 
-        protected async Task<PagedResults<T>> DbGetMany<M>(Expression<Func<T, bool>> where, int page, int pageSize)
+        protected async Task<PagedResultsDTO<T>> DbFindMany<M>(Expression<Func<T, bool>> where, int page, int pageSize)
         {
             if (page == 0)
                 page = 1;
@@ -126,10 +126,10 @@ namespace ProjectName.Api.Infrastructure
             var count = await query.CountAsync();
             var items = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
 
-            return new PagedResults<T>(items, count, page, pageSize);
+            return new PagedResultsDTO<T>(items, count, page, pageSize);
         }
 
-        protected async Task<PagedResults<M>> DbGetMany<M>(Expression<Func<T, M>> selector, int page, int pageSize)
+        protected async Task<PagedResultsDTO<M>> DbFindMany<M>(Expression<Func<T, M>> selector, int page, int pageSize)
         {
             if (page == 0)
                 page = 1;
@@ -140,10 +140,10 @@ namespace ProjectName.Api.Infrastructure
             var count = await GetManyQuery.CountAsync();
             var items = await GetManyQuery.Skip((page - 1) * pageSize).Take(pageSize).Select(selector).ToListAsync();
 
-            return new PagedResults<M>(items, count, page, pageSize);
+            return new PagedResultsDTO<M>(items, count, page, pageSize);
         }
 
-        protected async Task<PagedResults<M>> DbGetMany<M>(Expression<Func<T, bool>> where, Expression<Func<T, M>> selector, int page, int pageSize)
+        protected async Task<PagedResultsDTO<M>> DbFindMany<M>(Expression<Func<T, bool>> where, Expression<Func<T, M>> selector, int page, int pageSize)
         {
             if (page == 0)
                 page = 1;
@@ -158,10 +158,10 @@ namespace ProjectName.Api.Infrastructure
             var count = await query.CountAsync();
             var items = await query.Skip((page - 1) * pageSize).Take(pageSize).Select(selector).ToListAsync();
 
-            return new PagedResults<M>(items, count, page, pageSize);
+            return new PagedResultsDTO<M>(items, count, page, pageSize);
         }
 
-        protected async Task<PagedResults<M>> DbGetMany<M, TKey>(Expression<Func<T, bool>> where, Expression<Func<T, M>> selector, Expression<Func<T, TKey>> orderBy, int page, int pageSize)
+        protected async Task<PagedResultsDTO<M>> DbFindMany<M, TKey>(Expression<Func<T, bool>> where, Expression<Func<T, M>> selector, Expression<Func<T, TKey>> orderBy, int page, int pageSize)
         {
             if (page == 0)
                 page = 1;
@@ -176,19 +176,19 @@ namespace ProjectName.Api.Infrastructure
             var count = await query.CountAsync();
             var items = await query.OrderBy(orderBy).Skip((page - 1) * pageSize).Take(pageSize).Select(selector).ToListAsync();
 
-            return new PagedResults<M>(items, count, page, pageSize);
+            return new PagedResultsDTO<M>(items, count, page, pageSize);
         }
 
-        protected async Task<T> DbGet(Expression<Func<T, bool>> where)
+        protected async Task<T> DbFind(Expression<Func<T, bool>> where)
         {
-            var entity = await DbGetOrDefault(where);
+            var entity = await DbFindOrDefault(where);
             if (entity == null)
                 throw new ApiNotFoundException();
 
             return entity;
         }
 
-        protected async Task<T> DbGetOrDefault(Expression<Func<T, bool>> where)
+        protected async Task<T> DbFindOrDefault(Expression<Func<T, bool>> where)
         {
             return await _baseQuery.AsTracking().FirstOrDefaultAsync(where);
         }
@@ -213,7 +213,7 @@ namespace ProjectName.Api.Infrastructure
 
         protected async Task DbUpdate(IKey key, Action<T> onUpdate)
         {
-            var entity = await DbGet(x => x.Id.Equals(key));
+            var entity = await DbFind(x => x.Id.Equals(key));
             onUpdate(entity);
             await DbUpdate(entity);
         }
@@ -234,7 +234,7 @@ namespace ProjectName.Api.Infrastructure
 
         protected async Task DbCreateOrUpdate(T createEntity, Action<T> onUpdate)
         {
-            var entity = await DbGetOrDefault(x => x.Id.Equals(createEntity.Id));
+            var entity = await DbFindOrDefault(x => x.Id.Equals(createEntity.Id));
             if (entity == null)
             {
                 try
@@ -260,10 +260,10 @@ namespace ProjectName.Api.Infrastructure
             if (entity == null)
                 throw new ApiNotFoundException();
 
-            if (entity is IDeletableEntity)
+            if (entity is ISoftDeletableEntity)
             {
                 // Perform soft delete
-                ((IDeletableEntity)entity).Deleted = true;
+                ((ISoftDeletableEntity)entity).Deleted = true;
                 _db.Set<T>().Update(entity);
             }
             else
@@ -274,39 +274,22 @@ namespace ProjectName.Api.Infrastructure
 
             await _db.SaveChangesAsync();
         }
-
-        protected async Task DbHardDelete(Expression<Func<T, bool>> where)
-        {
-            var entity = await _db.Set<T>().FirstOrDefaultAsync(where);
-
-            if (entity == null)
-                throw new ApiNotFoundException();
-
-            await DbHardDelete(entity);
-        }
-
-        protected async Task DbHardDelete(T entity)
-        {
-            _db.Set<T>().Remove(entity);
-
-            await _db.SaveChangesAsync();
-        }
     }
 
-    #region Models
+    #region DTOs
 
-    public class PagedResults<M>
+    public class PagedResultsDTO<M>
     {
         public int Page { get; set; }
         public int TotalPages { get; set; }
         public List<M> Records { get; set; }
         public int TotalRecords { get; set; }
 
-        public PagedResults()
+        public PagedResultsDTO()
         {
         }
 
-        public PagedResults(List<M> items, int count, int pageIndex, int pageSize)
+        public PagedResultsDTO(List<M> items, int count, int pageIndex, int pageSize)
         {
             Page = pageIndex;
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);

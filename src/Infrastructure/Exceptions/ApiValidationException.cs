@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace ProjectName.Api.Infrastructure
+namespace ProjectRootNamespace.Api.Infrastructure
 {
     public enum ApiValidationErrors
     {

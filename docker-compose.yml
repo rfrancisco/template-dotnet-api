@@ -9,8 +9,8 @@ services:
   postgres:
     image: "mdillon/postgis:latest"
     environment:
-      POSTGRES_USER: projectName-dev
       POSTGRES_DB: projectName-dev
+      POSTGRES_USER: projectName-dev
       POSTGRES_PASSWORD: 1qaz2wsX
       SQL_DATABASE_SERVER: localhost
     ports:

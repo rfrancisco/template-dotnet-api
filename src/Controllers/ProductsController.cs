@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using ProjectName.Api.Services;
-using ProjectName.Api.Infrastructure;
+using ProjectRootNamespace.Api.Services;
+using ProjectRootNamespace.Api.Infrastructure;
 
-namespace ProjectName.Api.Controllers
+namespace ProjectRootNamespace.Api.Controllers
 {
     [Route("/products")]
     public class ProductsController : BaseController
@@ -27,9 +27,9 @@ namespace ProjectName.Api.Controllers
         /// <response code="400">Bad request.</response>
         [HttpGet]
         [SwaggerOperation(Tags = new[] { "Products" })]
-        public async Task<IEnumerable<ProductListModel>> GetMany()
+        public async Task<IEnumerable<ProductListDTO>> FindMany()
         {
-            return await _svc.GetMany();
+            return await _svc.FindMany();
         }
 
         /// <summary>
@@ -44,9 +44,9 @@ namespace ProjectName.Api.Controllers
         /// <response code="404">Record not found.</response>
         [HttpGet("{productId}")]
         [SwaggerOperation(Tags = new[] { "Products" })]
-        public async Task<ActionResult<ProductModel>> Get(int productId)
+        public async Task<ActionResult<ProductDTO>> Find(int productId)
         {
-            return await _svc.Get(productId);
+            return await _svc.Find(productId);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace ProjectName.Api.Controllers
         /// <response code="400">Bad request.</response>
         [HttpPost]
         [SwaggerOperation(Tags = new[] { "Products" })]
-        public async Task<ProductModel> Create(ProductCreateModel model)
+        public async Task<ProductDTO> Create(ProductCreateDTO model)
         {
             return await _svc.Create(model);
         }
@@ -77,7 +77,7 @@ namespace ProjectName.Api.Controllers
         /// <response code="404">Record not found.</response>
         [HttpPut("{productId}")]
         [SwaggerOperation(Tags = new[] { "Products" })]
-        public async Task Update(int productId, ProductUpdateModel model)
+        public async Task Update(int productId, ProductUpdateDTO model)
         {
             await _svc.Update(productId, model);
         }

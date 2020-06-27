@@ -1,4 +1,4 @@
-namespace ProjectName.Api
+namespace ProjectRootNamespace.Api
 {
     public class Settings
     {

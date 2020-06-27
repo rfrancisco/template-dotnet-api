@@ -1,7 +1,19 @@
 # First things to do
 
-* Perform a case sensitive find by 'ProjectName' and perform a replace-all with 'The_name_you_wish_for_the_project>'.
-  This will replace all namespaces from 'ProjectName.Api.*' with (if you replace with Uefa.Vista) 'Uefa.Vista.Api'.
+* Perform a case sensitive find for each of the keywprds below  and perform a replace-all:
+  * Replace '**projectName**' -> the name of the project starting in lowercase
+  * Replace '**ProjectName**' -> the name of the project starting in uppercase
+  * Replace '**projectRootNamespace**' -> the name of the project root namespace starting each namespace section in lowercase.
+  * Replace '**ProjectRootNamespace**' -> the name of the project root namespace starting each namespace section in uppercase.
+
+Examples:
+
+  * Replace '**projectName**' with '**activities**'
+  * Replace '**ProjectName**' with '**Activities**'
+  * Replace '**projectRootNamespace**' with '**focus.activities**'
+  * Replace '**ProjectRootNamespace**' with '**Focus.Activities**'
+
+You can remove this section of the readme once the changes are applied.
 
 # ProjectName Api
 
@@ -71,7 +83,7 @@ The settings can be merged/overriden by appsettings files specific to an environ
 
 - Read from *appsettings.json*
 - Read from *appsettings.{environment}.json* and merge/override
-- Read from environment variables and merge/override (Hierarchical settings can be set with __ (ex: ProjectName__JwtExpiration))
+- Read from environment variables and merge/override (Hierarchical settings can be set with __ (ex: Settings__JwtExpiration))
 
 ## How to work with database (using database code-first)
 

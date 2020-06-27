@@ -1,6 +1,6 @@
 using System;
 
-namespace ProjectName.Api.Infrastructure.DataAccess
+namespace ProjectRootNamespace.Api.Infrastructure.DataAccess
 {
     public interface IAuditableEntity
     {

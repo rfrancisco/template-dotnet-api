@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace ProjectName.Api.Controllers
+namespace ProjectRootNamespace.Api.Controllers
 {
     [Route("health")]
     public class HealthController : Controller
@@ -31,8 +31,9 @@ namespace ProjectName.Api.Controllers
         public async Task<IActionResult> Get()
         {
             var report = await _healthCheckService.CheckHealthAsync();
-
-            return report.Status == HealthStatus.Healthy ? Ok(report) : StatusCode((int)HttpStatusCode.ServiceUnavailable, report);
+            return report.Status == HealthStatus.Healthy
+                ? Ok("Healthy")
+                : StatusCode((int)HttpStatusCode.ServiceUnavailable, "Unhealthy");
         }
     }
 }

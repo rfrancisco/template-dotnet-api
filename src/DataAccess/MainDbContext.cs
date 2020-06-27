@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
-using ProjectName.Api.DataAccess.Seed;
+using ProjectRootNamespace.Api.DataAccess.Seed;
 
-namespace ProjectName.Api.DataAccess
+namespace ProjectRootNamespace.Api.DataAccess
 {
     public class MainDbContext : DbContext
     {

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using ProjectName.Api.DataAccess.Entities;
+using ProjectRootNamespace.Api.DataAccess.Entities;
 
-namespace ProjectName.Api.DataAccess.Seed
+namespace ProjectRootNamespace.Api.DataAccess.Seed
 {
     // Development Seed Data
     public class DevSeedDataGenerator
@@ -12,21 +12,25 @@ namespace ProjectName.Api.DataAccess.Seed
         {
             // TODO: Place your seed data here
             var products = new List<Product>();
+
             var rnd = new Random();
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 1; i <= 100; i++)
             {
                 products.Add(new Product()
                 {
-                    Id = ((i + 1) * -1),
-                    Name = "Product #" + (i + 1),
-                    Description = "",
+                    Id = i,
+                    Name = $"Product #{i}",
+                    Description = $"Description for product #{i}",
                     Price = rnd.NextDouble() * rnd.Next(1, 1000),
                     Stock = rnd.Next(1, 10)
                 });
             }
 
             modelBuilder.Entity<Product>().HasData(products);
+            // Sets the start value for identity generated values
+            // For details check: https://stackoverflow.com/questions/60187536/after-seeding-data-in-efcore-3-1-1-code-first-is-it-possible-to-set-identity-va)
+            modelBuilder.Entity<Product>().Property(x => x.Id).HasIdentityOptions(products.Count + 1);
         }
     }
 }

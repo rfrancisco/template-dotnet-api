@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
-namespace ProjectName.Api.Infrastructure.Extensions
+namespace ProjectRootNamespace.Api.Infrastructure.Extensions
 {
     /// <summary>
     /// Extension methods for setting up swagger services.

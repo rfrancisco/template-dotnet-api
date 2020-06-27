@@ -1,13 +1,12 @@
 using System;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using ProjectName.Api.DataAccess;
-using ProjectName.Api.Infrastructure.DataAccess;
-using ProjectName.Api.Infrastructure.Security;
+using ProjectRootNamespace.Api.DataAccess;
+using ProjectRootNamespace.Api.Infrastructure.DataAccess;
+using ProjectRootNamespace.Api.Infrastructure.Security;
 
-namespace ProjectName.Api.Infrastructure
+namespace ProjectRootNamespace.Api.Infrastructure
 {
     public abstract class BaseAuditableService<T, TKey> : BaseService<T, TKey> where T : class, IAuditableEntity, IIdentityEntity<TKey>
     {
@@ -23,8 +22,8 @@ namespace ProjectName.Api.Infrastructure
             _authenticatedUserProvider = authenticatedUserProvider;
 
             // Exclude deleted records by default if T implements the IDeletableEntity interface
-            if (typeof(IDeletableEntity).IsAssignableFrom(typeof(T)))
-                _baseQuery = _baseQuery.Where(x => !(x as IDeletableEntity).Deleted);
+            if (typeof(ISoftDeletableEntity).IsAssignableFrom(typeof(T)))
+                _baseQuery = _baseQuery.Where(x => !(x as ISoftDeletableEntity).Deleted);
         }
 
         protected string Username
@@ -56,22 +55,6 @@ namespace ProjectName.Api.Infrastructure
             entity.UpdatedOn = DateTime.UtcNow;
 
             await base.DbUpdate(entity);
-        }
-
-        protected new async Task DbDelete(Expression<Func<T, bool>> where)
-        {
-            var entity = await DbGet(where);
-
-            if (typeof(IDeletableEntity).IsAssignableFrom(typeof(T)))
-            {
-                (entity as IDeletableEntity).Deleted = true;
-                await DbUpdate(entity);
-            }
-            else
-            {
-                throw new NotSupportedException("The entity does not support soft deletes. Call DbDeleteHard instead");
-            }
-
         }
     }
 }

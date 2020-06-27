@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ProjectName.Api.Infrastructure.Extensions;
-using ProjectName.Api.Infrastructure;
-using ProjectName.Api.DataAccess;
+using ProjectRootNamespace.Api.Infrastructure.Extensions;
+using ProjectRootNamespace.Api.Infrastructure;
+using ProjectRootNamespace.Api.DataAccess;
 
-namespace ProjectName.Api
+namespace ProjectRootNamespace.Api
 {
     public class Startup
     {
@@ -27,7 +27,7 @@ namespace ProjectName.Api
             services.Configure<Settings>(Configuration.GetSection("Settings"));
             // Standard infrastructure stuff
             services.AddSwagger();
-            services.AddEntityFramework(Configuration.GetConnectionString("db"));
+            services.AddEntityFramework(Configuration.GetConnectionString("Db"));
             services.AddHealthChecks().AddDbContextCheck<MainDbContext>();
             services.AddControllers();
             services.AddCoreServices();

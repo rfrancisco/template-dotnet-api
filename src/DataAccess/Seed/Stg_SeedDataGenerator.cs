@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace ProjectName.Api.DataAccess.Seed
+namespace ProjectRootNamespace.Api.DataAccess.Seed
 {
     // Staging Seed Data
     public class StgSeedDataGenerator

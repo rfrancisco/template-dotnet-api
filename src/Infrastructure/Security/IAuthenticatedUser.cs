@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace ProjectName.Api.Infrastructure.Security
+namespace ProjectRootNamespace.Api.Infrastructure.Security
 {
     /// <summary>
     /// Interface that represents an authenticated user

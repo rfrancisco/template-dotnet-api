@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace ProjectName.Api.DataAccess.Seed
+namespace ProjectRootNamespace.Api.DataAccess.Seed
 {
     // Production Seed Data
     public class PrdSeedDataGenerator

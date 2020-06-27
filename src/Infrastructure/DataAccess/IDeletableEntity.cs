@@ -1,6 +1,6 @@
-namespace ProjectName.Api.Infrastructure.DataAccess
+namespace ProjectRootNamespace.Api.Infrastructure.DataAccess
 {
-    public interface IDeletableEntity
+    public interface ISoftDeletableEntity
     {
         /// <summary>
         /// Identifies if the object was flagged as deleted.
