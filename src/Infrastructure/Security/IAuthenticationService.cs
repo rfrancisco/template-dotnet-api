@@ -95,32 +95,32 @@ namespace ProjectRootNamespace.Api.Infrastructure.Security
     public class UserInfoDTO
     {
         /// <summary>
-        /// The user unique identifier
+        /// The display name for the user (uaualy the username, email of fullname)
         /// </summary>
-        public string UserId { get; set; }
+        string DisplayName { get; set; }
 
         /// <summary>
-        /// The user name
+        /// The user unique identifier (usualy the username or email)
         /// </summary>
-        public string Name { get; set; }
+        string UniqueIdentifier { get; set; }
 
         /// <summary>
-        /// The user email address
+        /// (Optional) The user email address
         /// </summary>
-        public string Email { get; set; }
+        string Email { get; set; }
 
         /// <summary>
-        /// The user photo or avatar
+        /// (Optional) The user avatar
         /// </summary>
-        public string Photo { get; set; }
+        string Avatar { get; set; }
 
         /// <summary>
-        /// The user display name
+        /// (Optional) Aditional information regarding the authenticated user
         /// </summary>
-        public string DisplayName { get; set; }
+        IDictionary<string, string> Metadata { get; set; }
 
         /// <summary>
-        /// The list of user roles
+        /// (Optional) The list of user roles
         /// </summary>
         public IDictionary<string, string> Roles { get; set; }
     }

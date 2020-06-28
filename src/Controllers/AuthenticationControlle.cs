@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 
 namespace ProjectRootNamespace.Api.Controllers
 {
-
-    // TODO: Comment if you dont need Custom authentication
     [Route("/authentication")]
     public class AuthenticationController : BaseController
     {
@@ -29,10 +27,8 @@ namespace ProjectRootNamespace.Api.Controllers
         [AllowAnonymous]
         [HttpPut("signIn")]
         [SwaggerOperation(Tags = new[] { "Authentication" })]
-        public Task<AccessTokenDTO> SignIn(SignInCredentialsDTO dto)
-        {
-            return _svc.SignIn(dto);
-        }
+        public Task<AccessTokenDTO> SignIn(SignInCredentialsDTO dto) =>
+            _svc.SignIn(dto);
 
         /// <summary>
         /// Allow a user to signout by removing the access and refresh tokens
@@ -41,10 +37,8 @@ namespace ProjectRootNamespace.Api.Controllers
         /// <response code="200">Always</response>
         [HttpPut("signOut")]
         [SwaggerOperation(Tags = new[] { "Authentication" })]
-        public Task SignOut()
-        {
-            return _svc.SignOut();
-        }
+        public Task SignOut() =>
+            _svc.SignOut();
 
         /// <summary>
         /// Generates a new access token using a refresh token. If successful
@@ -55,10 +49,8 @@ namespace ProjectRootNamespace.Api.Controllers
         /// <response code="400">If the credentials dont match a valid user</response>
         [HttpPut("refreshToken")]
         [SwaggerOperation(Tags = new[] { "Authentication" })]
-        public Task RefeshAccessToken()
-        {
-            return _svc.RefeshAccessToken("");
-        }
+        public Task RefeshAccessToken() =>
+            _svc.RefeshAccessToken("");
 
         /// <summary>
         /// Returns information regarding the authenticated user.
@@ -66,10 +58,8 @@ namespace ProjectRootNamespace.Api.Controllers
         /// <response code="200">Returns information for the authenticated user.</response>
         [HttpGet("userInfo")]
         [SwaggerOperation(Tags = new[] { "Authentication" })]
-        public Task<UserInfoDTO> GetUserInfo()
-        {
-            return _svc.GetUserInfo();
-        }
+        public Task<UserInfoDTO> GetUserInfo() =>
+            _svc.GetUserInfo();
     }
 
 }
