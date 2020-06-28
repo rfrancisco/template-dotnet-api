@@ -3,7 +3,7 @@ using ProjectRootNamespace.Api.Infrastructure.DataAccess;
 
 namespace ProjectRootNamespace.Api.DataAccess.Entities
 {
-    public class Product : CoreEntity
+    public class Product : CoreEntity<int>
     {
         [Required, MaxLength(64)]
         public string Name { get; set; }

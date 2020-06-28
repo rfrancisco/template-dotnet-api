@@ -10,42 +10,42 @@ using Microsoft.AspNetCore.Http;
 
 namespace ProjectRootNamespace.Api.Infrastructure
 {
-    public abstract class BaseService<T, IKey> where T : class, IIdentityEntity<IKey>
+    public abstract class BaseService<TEntity, TEntityKey> where TEntity : class, IIdentityEntity<TEntityKey>
     {
         protected readonly MainDbContext _db;
         private readonly IHttpContextAccessor _httpContext;
-        protected IQueryable<T> _baseQuery;
+        protected IQueryable<TEntity> _baseQuery;
 
         public BaseService(MainDbContext dbContext, IHttpContextAccessor httpContext)
         {
             _db = dbContext;
             _httpContext = httpContext;
-            _baseQuery = dbContext.Set<T>().AsNoTracking();
+            _baseQuery = dbContext.Set<TEntity>().AsNoTracking();
         }
 
-        protected virtual IQueryable<T> GetManyQuery => _baseQuery;
+        protected virtual IQueryable<TEntity> GetManyQuery => _baseQuery;
 
-        protected async Task<IEnumerable<T>> DbFindMany()
+        protected async Task<IEnumerable<TEntity>> DbFindMany()
         {
             return await GetManyQuery
                 .ToListAsync();
         }
 
-        protected async Task<IEnumerable<M>> DbFindMany<M>(Expression<Func<T, M>> selector)
+        protected async Task<IEnumerable<M>> DbFindMany<M>(Expression<Func<TEntity, M>> selector)
         {
             return await GetManyQuery
                 .Select(selector)
                 .ToListAsync();
         }
 
-        protected async Task<IEnumerable<T>> DbFindMany(Expression<Func<T, bool>> where)
+        protected async Task<IEnumerable<TEntity>> DbFindMany(Expression<Func<TEntity, bool>> where)
         {
             return await GetManyQuery
                 .Where(where)
                 .ToListAsync();
         }
 
-        protected async Task<IEnumerable<M>> DbFindMany<M>(Expression<Func<T, bool>> where, Expression<Func<T, M>> selector)
+        protected async Task<IEnumerable<M>> DbFindMany<M>(Expression<Func<TEntity, bool>> where, Expression<Func<TEntity, M>> selector)
         {
             var query = GetManyQuery;
 
@@ -57,7 +57,7 @@ namespace ProjectRootNamespace.Api.Infrastructure
                 .ToListAsync();
         }
 
-        protected async Task<IEnumerable<M>> DbFindMany<M, TKey>(Expression<Func<T, bool>> where, Expression<Func<T, M>> selector, Expression<Func<T, TKey>> orderBy)
+        protected async Task<IEnumerable<M>> DbFindMany<M, TKey>(Expression<Func<TEntity, bool>> where, Expression<Func<TEntity, M>> selector, Expression<Func<TEntity, TKey>> orderBy)
         {
             var query = GetManyQuery;
 
@@ -70,7 +70,7 @@ namespace ProjectRootNamespace.Api.Infrastructure
                 .ToListAsync();
         }
 
-        protected async Task<IEnumerable<M>> DbFindManyDescending<M, TKey>(Expression<Func<T, bool>> where, Expression<Func<T, M>> selector, Expression<Func<T, TKey>> orderBy)
+        protected async Task<IEnumerable<M>> DbFindManyDescending<M, TKey>(Expression<Func<TEntity, bool>> where, Expression<Func<TEntity, M>> selector, Expression<Func<TEntity, TKey>> orderBy)
         {
             var query = GetManyQuery;
 
@@ -83,7 +83,7 @@ namespace ProjectRootNamespace.Api.Infrastructure
                 .ToListAsync();
         }
 
-        protected async Task<PagedResultsDTO<M>> DbFindManyDescending<M, TKey>(Expression<Func<T, bool>> where, Expression<Func<T, M>> selector, Expression<Func<T, TKey>> orderBy, int page, int pageSize)
+        protected async Task<PagedResultsDTO<M>> DbFindManyDescending<M, TKey>(Expression<Func<TEntity, bool>> where, Expression<Func<TEntity, M>> selector, Expression<Func<TEntity, TKey>> orderBy, int page, int pageSize)
         {
             if (page == 0)
                 page = 1;
@@ -101,7 +101,7 @@ namespace ProjectRootNamespace.Api.Infrastructure
             return new PagedResultsDTO<M>(items, count, page, pageSize);
         }
 
-        protected async Task<PagedResultsDTO<T>> DbFindMany(int page, int pageSize)
+        protected async Task<PagedResultsDTO<TEntity>> DbFindMany(int page, int pageSize)
         {
             if (page == 0)
                 page = 1;
@@ -112,10 +112,10 @@ namespace ProjectRootNamespace.Api.Infrastructure
             var count = await GetManyQuery.CountAsync();
             var items = await GetManyQuery.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
 
-            return new PagedResultsDTO<T>(items, count, page, pageSize);
+            return new PagedResultsDTO<TEntity>(items, count, page, pageSize);
         }
 
-        protected async Task<PagedResultsDTO<T>> DbFindMany<M>(Expression<Func<T, bool>> where, int page, int pageSize)
+        protected async Task<PagedResultsDTO<TEntity>> DbFindMany<M>(Expression<Func<TEntity, bool>> where, int page, int pageSize)
         {
             if (page == 0)
                 page = 1;
@@ -130,10 +130,10 @@ namespace ProjectRootNamespace.Api.Infrastructure
             var count = await query.CountAsync();
             var items = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
 
-            return new PagedResultsDTO<T>(items, count, page, pageSize);
+            return new PagedResultsDTO<TEntity>(items, count, page, pageSize);
         }
 
-        protected async Task<PagedResultsDTO<M>> DbFindMany<M>(Expression<Func<T, M>> selector, int page, int pageSize)
+        protected async Task<PagedResultsDTO<M>> DbFindMany<M>(Expression<Func<TEntity, M>> selector, int page, int pageSize)
         {
             if (page == 0)
                 page = 1;
@@ -147,7 +147,7 @@ namespace ProjectRootNamespace.Api.Infrastructure
             return new PagedResultsDTO<M>(items, count, page, pageSize);
         }
 
-        protected async Task<PagedResultsDTO<M>> DbFindMany<M>(Expression<Func<T, bool>> where, Expression<Func<T, M>> selector, int page, int pageSize)
+        protected async Task<PagedResultsDTO<M>> DbFindMany<M>(Expression<Func<TEntity, bool>> where, Expression<Func<TEntity, M>> selector, int page, int pageSize)
         {
             if (page == 0)
                 page = 1;
@@ -165,7 +165,7 @@ namespace ProjectRootNamespace.Api.Infrastructure
             return new PagedResultsDTO<M>(items, count, page, pageSize);
         }
 
-        protected async Task<PagedResultsDTO<M>> DbFindMany<M, TKey>(Expression<Func<T, bool>> where, Expression<Func<T, M>> selector, Expression<Func<T, TKey>> orderBy, int page, int pageSize)
+        protected async Task<PagedResultsDTO<M>> DbFindMany<M, TKey>(Expression<Func<TEntity, bool>> where, Expression<Func<TEntity, M>> selector, Expression<Func<TEntity, TKey>> orderBy, int page, int pageSize)
         {
             if (page == 0)
                 page = 1;
@@ -183,7 +183,7 @@ namespace ProjectRootNamespace.Api.Infrastructure
             return new PagedResultsDTO<M>(items, count, page, pageSize);
         }
 
-        protected async Task<T> DbFind(Expression<Func<T, bool>> where)
+        protected async Task<TEntity> DbFind(Expression<Func<TEntity, bool>> where)
         {
             var entity = await DbFindOrDefault(where);
             if (entity == null)
@@ -192,7 +192,7 @@ namespace ProjectRootNamespace.Api.Infrastructure
             return entity;
         }
 
-        protected async Task<T> DbFindOrDefault(Expression<Func<T, bool>> where)
+        protected async Task<TEntity> DbFindOrDefault(Expression<Func<TEntity, bool>> where)
         {
             return await _baseQuery
                 .AsTracking()
@@ -200,7 +200,7 @@ namespace ProjectRootNamespace.Api.Infrastructure
                 .FirstOrDefaultAsync(where);
         }
 
-        protected async Task<bool> DbExists(Expression<Func<T, bool>> where)
+        protected async Task<bool> DbExists(Expression<Func<TEntity, bool>> where)
         {
             var count = await _baseQuery
                 .IgnoreQueryFilters()
@@ -209,7 +209,7 @@ namespace ProjectRootNamespace.Api.Infrastructure
             return count == 0 ? false : true;
         }
 
-        protected async Task<T> DbCreate(T entity)
+        protected async Task<TEntity> DbCreate(TEntity entity)
         {
             var dbEntity = _db.Attach(entity);
             // Force Added state for cases where the primary key is already set 
@@ -230,16 +230,16 @@ namespace ProjectRootNamespace.Api.Infrastructure
             return entity;
         }
 
-        protected async Task DbUpdate(IKey key, Action<T> onUpdate)
+        protected async Task DbUpdate(TEntityKey key, Action<TEntity> onUpdate)
         {
             var entity = await DbFind(x => x.Id.Equals(key));
             onUpdate(entity);
             await DbUpdate(entity);
         }
 
-        protected async Task DbUpdate(T entity)
+        protected async Task DbUpdate(TEntity entity)
         {
-            var local = _db.Set<T>()
+            var local = _db.Set<TEntity>()
                     .Local
                     .FirstOrDefault(entry => entry.Id.Equals(entity.Id));
 
@@ -259,7 +259,7 @@ namespace ProjectRootNamespace.Api.Infrastructure
             await _db.SaveChangesAsync();
         }
 
-        protected async Task DbCreateOrUpdate(T createEntity, Action<T> onUpdate)
+        protected async Task DbCreateOrUpdate(TEntity createEntity, Action<TEntity> onUpdate)
         {
             var entity = await DbFindOrDefault(x => x.Id.Equals(createEntity.Id));
             if (entity == null)
@@ -280,9 +280,9 @@ namespace ProjectRootNamespace.Api.Infrastructure
             }
         }
 
-        protected async Task DbDelete(Expression<Func<T, bool>> where)
+        protected async Task DbDelete(Expression<Func<TEntity, bool>> where)
         {
-            var entity = await _db.Set<T>().FirstOrDefaultAsync(where);
+            var entity = await _db.Set<TEntity>().FirstOrDefaultAsync(where);
 
             if (entity == null)
                 throw new ApiNotFoundException();
@@ -298,12 +298,12 @@ namespace ProjectRootNamespace.Api.Infrastructure
                     (entity as IAuditableEntity).UpdatedBy = user;
                     (entity as IAuditableEntity).UpdatedOn = date;
                 }
-                _db.Set<T>().Update(entity);
+                _db.Set<TEntity>().Update(entity);
             }
             else
             {
                 // Perform hard delete
-                _db.Set<T>().Remove(entity);
+                _db.Set<TEntity>().Remove(entity);
             }
 
             await _db.SaveChangesAsync();

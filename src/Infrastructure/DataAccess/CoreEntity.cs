@@ -4,13 +4,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ProjectRootNamespace.Api.Infrastructure.DataAccess
 {
-    public class CoreEntity : ISoftDeletableEntity, IAuditableEntity, IIdentityEntity<int>
+    public class CoreEntity<TEntityKey> : ISoftDeletableEntity, IAuditableEntity, IIdentityEntity<TEntityKey>
     {
         /// <summary>
         /// The record unique identifier.
         /// </summary>
         [Key]
-        public int Id { get; set; }
+        public TEntityKey Id { get; set; }
 
         /// <summary>
         /// The user that created the record.
