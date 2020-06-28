@@ -1,9 +1,9 @@
 .topbar {
-    background: #eaeaea !important;
+    background: #5f6368 !important;
 }
 
 .select-label > span {
-    color: #3b4251 !important;
+    color: #fff !important;
 }
 
 .swagger-ui .wrapper {
@@ -17,7 +17,7 @@
 
 .topbar-wrapper > a > img {
     content: url(logo.png) !important;
-    height: 35px !important;
+    height: 65px !important;
     margin: -15px 0;
 }
 
