@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ProjectRootNamespace.Api.Infrastructure.Extensions;
 using ProjectRootNamespace.Api.Infrastructure;
 using ProjectRootNamespace.Api.DataAccess;
+using ProjectRootNamespace.Api.Infrastructure.Startup;
 
 namespace ProjectRootNamespace.Api
 {
@@ -29,6 +29,8 @@ namespace ProjectRootNamespace.Api
             services.AddSwagger();
             services.AddEntityFramework(Configuration.GetConnectionString("Db"));
             services.AddHealthChecks().AddDbContextCheck<MainDbContext>();
+            //services.AddLisAuthentication(Configuration);
+            services.AddCustomAuthentication(Configuration);
             services.AddControllers();
             services.AddCoreServices();
             services.AddCustomExceptionHandler();
@@ -47,6 +49,8 @@ namespace ProjectRootNamespace.Api
             app.UseSwagger();
             app.UseRouting();
             app.UseCustomExceptionHandler();
+            //app.UseLisAuthentication();
+            app.UseCustomAuthentication();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHealthChecks("/health");

@@ -1,4 +1,4 @@
-namespace ProjectRootNamespace.Api.Infrastructure
+namespace ProjectRootNamespace.Api.Infrastructure.Exceptions
 {
     public class ApiNotFoundException : ApiException
     {

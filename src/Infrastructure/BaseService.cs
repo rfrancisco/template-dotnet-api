@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using ProjectRootNamespace.Api.Infrastructure.DataAccess;
 using Microsoft.AspNetCore.Http;
+using ProjectRootNamespace.Api.Infrastructure.Exceptions;
 
 namespace ProjectRootNamespace.Api.Infrastructure
 {

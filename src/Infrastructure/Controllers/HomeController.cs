@@ -3,10 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using ProjectRootNamespace.Api.Infrastructure;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace ProjectRootNamespace.Api.Controllers
+namespace ProjectRootNamespace.Api.Infrastructure.Controllers
 {
     [AllowAnonymous]
     [Route("")]

@@ -6,8 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using ProjectRootNamespace.Api.Infrastructure.Exceptions;
 
-namespace ProjectRootNamespace.Api.Infrastructure.Extensions
+namespace ProjectRootNamespace.Api.Infrastructure.Startup
 {
     /// <summary>
     /// Extension methods for setting up custom exception handler middleware services.

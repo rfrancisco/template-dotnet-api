@@ -4,7 +4,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ProjectRootNamespace.Api.Infrastructure.Extensions
+namespace ProjectRootNamespace.Api.Infrastructure.Startup
 {
     /// <summary>
     /// Extension methods for setting up core services.
@@ -60,7 +60,7 @@ namespace ProjectRootNamespace.Api.Infrastructure.Extensions
         private static void RegisterServices(IServiceCollection services, ServiceLifetime lifetime, Func<Type, bool> predicate)
         {
             // Load services matching the predicate
-            var allServices = Assembly.GetAssembly(typeof(Startup)).GetTypes()
+            var allServices = Assembly.GetAssembly(typeof(Program)).GetTypes()
                 .Where(predicate)
                 .Where(x => x.GetTypeInfo().IsClass && !x.GetTypeInfo().IsAbstract && x.GetTypeInfo().IsVisible).ToArray();
 

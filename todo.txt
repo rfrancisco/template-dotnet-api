@@ -2,6 +2,7 @@
 - Tests (see emel and activity plan)
 - Add support to Encrypt/Decrypt configurations
 
+- Document Generic parameters and infrastructure classes
 - Create a shared dll
 - Add Lis Authentication
 - Implement the logic in BaseAuditableService in BaseService (may be tricky because of IContextProvider)

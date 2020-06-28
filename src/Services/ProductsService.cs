@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using ProjectRootNamespace.Api.DataAccess;
 using ProjectRootNamespace.Api.DataAccess.Entities;
 using ProjectRootNamespace.Api.Infrastructure;
+using ProjectRootNamespace.Api.Infrastructure.Exceptions;
 
 namespace ProjectRootNamespace.Api.Services
 {

@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ProjectRootNamespace.Api.Infrastructure
 {
     [ApiController]
+    [Authorize]
     public abstract class BaseController : ControllerBase
     {
         // TODO: Place logic common to all or most controllers here.

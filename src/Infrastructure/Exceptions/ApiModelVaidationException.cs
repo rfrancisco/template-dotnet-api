@@ -1,7 +1,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace ProjectRootNamespace.Api.Infrastructure
+namespace ProjectRootNamespace.Api.Infrastructure.Exceptions
 {
     public class ApiModelValidationException : ApiException
     {
