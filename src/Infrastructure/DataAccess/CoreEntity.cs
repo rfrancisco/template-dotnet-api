@@ -27,11 +27,13 @@ namespace ProjectRootNamespace.Api.Infrastructure.DataAccess
         /// <summary>
         /// The last user to modified the record.
         /// </summary>
+        [Required]
         public string UpdatedBy { get; set; }
 
         /// <summary>
         /// The date of the record last modification.
         /// </summary>
+        [Required]
         public DateTime UpdatedOn { get; set; }
 
         /// <summary>
