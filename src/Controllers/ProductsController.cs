@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -18,6 +17,7 @@ namespace ProjectRootNamespace.Api.Controllers
         /// <summary>
         /// Get the list of products.
         /// </summary>
+        /// <param name="searchTerm">(Optional) Get records that match the specified value.</param>
         /// <param name="page">(Optional) The page of records to retrieve.</param>
         /// <param name="pageSize">(Optional) The number of records per page to retrieve.</param>
         /// <returns>The list of records found.</returns>
@@ -27,8 +27,8 @@ namespace ProjectRootNamespace.Api.Controllers
         /// <response code="400">Bad request.</response>
         [HttpGet]
         [SwaggerOperation(Tags = new[] { "Products" })]
-        public async Task<PagedResultsDTO<ProductListDTO>> FindMany([FromQuery] int page = 0, [FromQuery] int pageSize = 0) =>
-            await _svc.FindMany(page, pageSize);
+        public Task<PagedResultsDTO<ProductListDTO>> FindMany([FromQuery] string searchTerm, [FromQuery] int page = 0, [FromQuery] int pageSize = 0) =>
+             _svc.FindMany(searchTerm, page, pageSize);
 
         /// <summary>
         /// Get the specified product.
@@ -42,8 +42,8 @@ namespace ProjectRootNamespace.Api.Controllers
         /// <response code="404">Record not found.</response>
         [HttpGet("{id}")]
         [SwaggerOperation(Tags = new[] { "Products" })]
-        public async Task<ActionResult<ProductDTO>> Find(int id) =>
-            await _svc.Find(id);
+        public Task<ProductDTO> Find(int id) =>
+             _svc.Find(id);
 
         /// <summary>
         /// Create a new product.
@@ -56,8 +56,8 @@ namespace ProjectRootNamespace.Api.Controllers
         /// <response code="400">Bad request.</response>
         [HttpPost]
         [SwaggerOperation(Tags = new[] { "Products" })]
-        public async Task<ProductDTO> Create(ProductCreateDTO model) =>
-            await _svc.Create(model);
+        public Task<ProductDTO> Create(ProductCreateDTO model) =>
+             _svc.Create(model);
 
         /// <summary>
         /// Updates an existing product.
@@ -71,8 +71,8 @@ namespace ProjectRootNamespace.Api.Controllers
         /// <response code="404">Record not found.</response>
         [HttpPut("{id}")]
         [SwaggerOperation(Tags = new[] { "Products" })]
-        public async Task Update(int id, ProductUpdateDTO model) =>
-            await _svc.Update(id, model);
+        public Task Update(int id, ProductUpdateDTO model) =>
+             _svc.Update(id, model);
 
         /// <summary>
         /// Deletes an existing product.
@@ -85,7 +85,7 @@ namespace ProjectRootNamespace.Api.Controllers
         /// <response code="404">Record not found.</response>
         [HttpDelete("{id}")]
         [SwaggerOperation(Tags = new[] { "Products" })]
-        public async Task Delete(int id) =>
-            await _svc.Delete(id);
+        public Task Delete(int id) =>
+             _svc.Delete(id);
     }
 }

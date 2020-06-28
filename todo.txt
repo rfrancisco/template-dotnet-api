@@ -1,4 +1,4 @@
-- Add paging example
+- Add 
 - Add Dummy Authentication
 - Tests (see emel and activity plan)
 - Add support to Encrypt/Decrypt configurations

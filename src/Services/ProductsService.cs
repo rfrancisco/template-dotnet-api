@@ -1,5 +1,7 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using ProjectRootNamespace.Api.DataAccess;
 using ProjectRootNamespace.Api.DataAccess.Entities;
 using ProjectRootNamespace.Api.Infrastructure;
@@ -9,7 +11,7 @@ namespace ProjectRootNamespace.Api.Services
     public interface IProductsService
     {
         Task<ProductDTO> Find(int id);
-        Task<PagedResultsDTO<ProductListDTO>> FindMany(int page = 0, int pageSize = 0);
+        Task<PagedResultsDTO<ProductListDTO>> FindMany(string searchTerm = "", int page = 0, int pageSize = 0);
         Task<ProductDTO> Create(ProductCreateDTO model);
         Task Update(int id, ProductUpdateDTO model);
         Task Delete(int id);
@@ -17,18 +19,22 @@ namespace ProjectRootNamespace.Api.Services
 
     public class ProductsService : BaseService<Product, int>, IProductsService
     {
-        public ProductsService(MainDbContext dbContext) : base(dbContext)
-        {
-        }
+        public ProductsService(
+            MainDbContext dbContext,
+            IHttpContextAccessor httpContext) : base(dbContext, httpContext) { }
 
         public async Task<ProductDTO> Find(int id)
         {
             return new ProductDTO(await DbFind(x => x.Id == id));
         }
 
-        public async Task<PagedResultsDTO<ProductListDTO>> FindMany(int page = 0, int pageSize = 0)
+        public async Task<PagedResultsDTO<ProductListDTO>> FindMany(string searchTerm = "", int page = 0, int pageSize = 0)
         {
-            return await DbFindMany(x => new ProductListDTO(x), page, pageSize);
+            return await DbFindMany(
+                w => string.IsNullOrEmpty(searchTerm) || w.Name.ToLower().Trim().Contains(searchTerm.ToLower().Trim()),
+                x => new ProductListDTO(x),
+                page,
+                pageSize);
         }
 
         public async Task<ProductDTO> Create(ProductCreateDTO model)
@@ -38,11 +44,10 @@ namespace ProjectRootNamespace.Api.Services
 
             var dbRecord = new Product()
             {
-                Name = model.Name,
-                Description = model.Description,
+                Name = model.Name.Trim(),
+                Description = model.Description.Trim(),
                 Price = model.Price,
-                Stock = model.Stock,
-                Deleted = false,
+                Stock = model.Stock
             };
 
             return await Find((await DbCreate(dbRecord)).Id);
@@ -54,8 +59,8 @@ namespace ProjectRootNamespace.Api.Services
                 throw new ApiValidationException("DUPLICATE_NAME", "A record with the same name already exists");
 
             var dbRecord = await DbFind(x => x.Id == id);
-            dbRecord.Name = model.Name;
-            dbRecord.Description = model.Description;
+            dbRecord.Name = model.Name.Trim();
+            dbRecord.Description = model.Description.Trim();
             dbRecord.Price = model.Price;
             dbRecord.Stock = model.Stock;
 
@@ -77,6 +82,10 @@ namespace ProjectRootNamespace.Api.Services
         public string Description { get; set; }
         public double Price { get; set; }
         public int Stock { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public string UpdatedBy { get; set; }
+        public DateTime UpdatedOn { get; set; }
 
         public ProductDTO() { }
 
@@ -87,6 +96,10 @@ namespace ProjectRootNamespace.Api.Services
             Description = source.Description;
             Price = source.Price;
             Stock = source.Stock;
+            CreatedBy = source.CreatedBy;
+            CreatedOn = source.CreatedOn;
+            UpdatedBy = source.UpdatedBy;
+            UpdatedOn = source.UpdatedOn;
         }
     }
 

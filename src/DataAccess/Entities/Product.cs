@@ -1,14 +1,10 @@
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using ProjectRootNamespace.Api.Infrastructure.DataAccess;
 
 namespace ProjectRootNamespace.Api.DataAccess.Entities
 {
-    public class Product : ISoftDeletableEntity, IIdentityEntity<int>
+    public class Product : CoreEntity
     {
-        [Key]
-        public int Id { get; set; }
-
         [Required, MaxLength(64)]
         public string Name { get; set; }
 
@@ -20,8 +16,5 @@ namespace ProjectRootNamespace.Api.DataAccess.Entities
 
         [Required]
         public int Stock { get; set; }
-
-        [Required, DefaultValue(false)]
-        public bool Deleted { get; set; }
     }
 }

@@ -11,7 +11,9 @@ namespace ProjectRootNamespace.Api.Infrastructure.Extensions
     {
         public static void AddEntityFramework(this IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<MainDbContext>(options => options.UseNpgsql(connectionString));
+            services.AddDbContext<MainDbContext>(options =>
+                options.UseNpgsql(connectionString, options =>
+                    options.UseNetTopologySuite()));
         }
     }
 }

@@ -6,17 +6,20 @@ using ProjectRootNamespace.Api.DataAccess;
 using System.Linq;
 using System.Linq.Expressions;
 using ProjectRootNamespace.Api.Infrastructure.DataAccess;
+using Microsoft.AspNetCore.Http;
 
 namespace ProjectRootNamespace.Api.Infrastructure
 {
     public abstract class BaseService<T, IKey> where T : class, IIdentityEntity<IKey>
     {
         protected readonly MainDbContext _db;
+        private readonly IHttpContextAccessor _httpContext;
         protected IQueryable<T> _baseQuery;
 
-        public BaseService(MainDbContext dbContext)
+        public BaseService(MainDbContext dbContext, IHttpContextAccessor httpContext)
         {
             _db = dbContext;
+            _httpContext = httpContext;
             _baseQuery = dbContext.Set<T>().AsNoTracking();
         }
 
@@ -66,6 +69,7 @@ namespace ProjectRootNamespace.Api.Infrastructure
                 .Select(selector)
                 .ToListAsync();
         }
+
         protected async Task<IEnumerable<M>> DbFindManyDescending<M, TKey>(Expression<Func<T, bool>> where, Expression<Func<T, M>> selector, Expression<Func<T, TKey>> orderBy)
         {
             var query = GetManyQuery;
@@ -190,12 +194,16 @@ namespace ProjectRootNamespace.Api.Infrastructure
 
         protected async Task<T> DbFindOrDefault(Expression<Func<T, bool>> where)
         {
-            return await _baseQuery.AsTracking().FirstOrDefaultAsync(where);
+            return await _baseQuery
+                .AsTracking()
+                .IgnoreQueryFilters()
+                .FirstOrDefaultAsync(where);
         }
 
         protected async Task<bool> DbExists(Expression<Func<T, bool>> where)
         {
             var count = await _baseQuery
+                .IgnoreQueryFilters()
                 .CountAsync(where);
 
             return count == 0 ? false : true;
@@ -206,6 +214,17 @@ namespace ProjectRootNamespace.Api.Infrastructure
             var dbEntity = _db.Attach(entity);
             // Force Added state for cases where the primary key is already set 
             dbEntity.State = EntityState.Added;
+
+            if (entity is IAuditableEntity)
+            {
+                var user = GetAuthenticatedUser();
+                var date = DateTime.UtcNow;
+                (entity as IAuditableEntity).CreatedBy = user;
+                (entity as IAuditableEntity).CreatedOn = date;
+                (entity as IAuditableEntity).UpdatedBy = user;
+                (entity as IAuditableEntity).UpdatedOn = date;
+            }
+
             await _db.SaveChangesAsync();
 
             return entity;
@@ -223,6 +242,14 @@ namespace ProjectRootNamespace.Api.Infrastructure
             var local = _db.Set<T>()
                     .Local
                     .FirstOrDefault(entry => entry.Id.Equals(entity.Id));
+
+            if (entity is IAuditableEntity)
+            {
+                var user = GetAuthenticatedUser();
+                var date = DateTime.UtcNow;
+                (entity as IAuditableEntity).UpdatedBy = user;
+                (entity as IAuditableEntity).UpdatedOn = date;
+            }
 
             if (local != null)
                 _db.Entry(local).CurrentValues.SetValues(entity);
@@ -264,6 +291,13 @@ namespace ProjectRootNamespace.Api.Infrastructure
             {
                 // Perform soft delete
                 ((ISoftDeletableEntity)entity).Deleted = true;
+                if (entity is IAuditableEntity)
+                {
+                    var user = GetAuthenticatedUser();
+                    var date = DateTime.UtcNow;
+                    (entity as IAuditableEntity).UpdatedBy = user;
+                    (entity as IAuditableEntity).UpdatedOn = date;
+                }
                 _db.Set<T>().Update(entity);
             }
             else
@@ -273,6 +307,11 @@ namespace ProjectRootNamespace.Api.Infrastructure
             }
 
             await _db.SaveChangesAsync();
+        }
+
+        private string GetAuthenticatedUser()
+        {
+            return _httpContext?.HttpContext?.User?.Identity?.Name ?? "unknown";
         }
     }
 

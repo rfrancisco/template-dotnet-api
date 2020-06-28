@@ -23,7 +23,11 @@ namespace ProjectRootNamespace.Api.DataAccess.Seed
                     Name = $"Product #{i}",
                     Description = $"Description for product #{i}",
                     Price = rnd.NextDouble() * rnd.Next(1, 1000),
-                    Stock = rnd.Next(1, 10)
+                    Stock = rnd.Next(1, 10),
+                    CreatedBy = "unknown",
+                    CreatedOn = new DateTime(2020, 1, 1),
+                    UpdatedBy = "unknown",
+                    UpdatedOn = new DateTime(2020, 1, 1)
                 });
             }
 
