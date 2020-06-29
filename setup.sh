@@ -217,12 +217,12 @@ ask_confirmation
 SECONDS=0
 
 # Remove the first section of the readme file since this script performs the same tasks
-sed -i '' '/# projectName Api/,$!d' readme.md
+sed -i '' '/# Activities Api/,$!d' readme.md
 # Performs the necessary replaces
-replace_all "projectName" "$PROJECT_NAME"
-replace_all "projectRootNamespace" "$ROOT_NAMESPACE"
-replace_all "projectAssemblyName" "$(echo "$ROOT_NAMESPACE" | awk '{print tolower($0)}')"
-replace_all "dbName" "$DB_NAME"
+replace_all "Activities" "$PROJECT_NAME"
+replace_all "Focus.Activities" "$ROOT_NAMESPACE"
+replace_all "focus.activities" "$(echo "$ROOT_NAMESPACE" | awk '{print tolower($0)}')"
+replace_all "activities" "$DB_NAME"
 # Enables the auth provider
 set_auth_provider "$AUTH_PROVIDER"
 # Deletes this script since it cannot be executed again
@@ -234,10 +234,8 @@ printf "Next steps:\n"
 printf "  - Start database:    '\033[1;32mdocker-compose up\033[0m'\n"
 printf "  - Crteate migration: '\033[1;32mdotnet ef migrations add Initial -p ./src/api.csproj\033[0m'\n"
 printf "  - Apply migration:   '\033[1;32mdotnet ef database update -p ./src/api.csproj\033[0m'\n"
-printf "  - Start application: '\033[1;32mdotnet run -p ./src/api.csproj\033[0m'\n"
 printf "  - Test application:  '\033[1;32mdotnet test tests/api.tests.csproj\033[0m'\n"
+printf "  - Start application: '\033[1;32mdotnet run -p ./src/api.csproj\033[0m'\n"
 printf "  - Check the readme.md file for more information\n"
 printf "\n"
-
-dotnet ef migrations add Initial -p ./src/api.csproj
 
