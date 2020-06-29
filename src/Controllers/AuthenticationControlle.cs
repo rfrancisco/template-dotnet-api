@@ -12,10 +12,8 @@ namespace ProjectRootNamespace.Api.Controllers
     {
         private readonly IAuthenticationService _svc;
 
-        public AuthenticationController(IAuthenticationService svc)
-        {
+        public AuthenticationController(IAuthenticationService svc) =>
             _svc = svc;
-        }
 
         /// <summary>
         /// Allow a user to signin.
@@ -24,9 +22,9 @@ namespace ProjectRootNamespace.Api.Controllers
         /// If successful returns the jwt that was generated and appends an
         /// authotization cookie to the response.
         /// </remarks>
-        /// <param name="dto">The dto containing the sign-in credentials</param>
+        /// <param name="dto">The dto containing the sign-in credentials.</param>
         /// <response code="200">Returns the new acccess and refresh token.</response>
-        /// <response code="400">If the credentials dont match a valid user</response>
+        /// <response code="400">If the credentials dont match a valid user.</response>
         [AllowAnonymous]
         [HttpPut("signIn")]
         [SwaggerOperation(Tags = new[] { "Authentication" })]
@@ -37,7 +35,7 @@ namespace ProjectRootNamespace.Api.Controllers
         /// Allow a user to signout by removing the access and refresh tokens
         /// cookies.
         /// </summary>
-        /// <response code="200">Always</response>
+        /// <response code="200">If successful.</response>
         /// <response code="401">Request is not unauthorized.</response>
         [HttpPut("signOut")]
         [SwaggerOperation(Tags = new[] { "Authentication" })]
