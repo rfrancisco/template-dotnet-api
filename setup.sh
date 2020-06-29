@@ -216,14 +216,25 @@ ask_confirmation
 # Used to calculate how long the script takes to execute. (https://www.safaribooksonline.com/library/view/shell-scripting-expert/9781118166321/c03-anchor-3.xhtml)
 SECONDS=0
 
+# Remove the first section of the readme file since this script performs the same tasks
+sed -i '' '/# projectName Api/,$!d' readme.md
+# Performs the necessary replaces
 replace_all "projectName" "$PROJECT_NAME"
 replace_all "projectRootNamespace" "$ROOT_NAMESPACE"
 replace_all "projectAssemblyName" "$(echo "$ROOT_NAMESPACE" | awk '{print tolower($0)}')"
 replace_all "dbName" "$DB_NAME"
+# Enables the auth provider
 set_auth_provider "$AUTH_PROVIDER"
+# Deletes this script since it cannot be executed again
 rm setup.sh
 
+printf "Process completed in \033[1;33m$SECONDS\033[0m seconds!\n"
 printf "\n"
-printf "Process completed \033[1;33m$SECONDS\033[0m seconds!\n"
+printf "Next steps:\n"
+printf "  - Start database:    '\033[1;32mdocker-compose up\033[0m'\n"
+printf "  - Apply migrations:  '\033[1;32mcd src; dotnet ef migrations add Initial; dotnet ef database update;\033[0m'\n"
+printf "  - Start application: '\033[1;32mdotnet run\033[0m'\n"
+printf "  - Check the readme.md file for more information\n"
 printf "\n"
+
 
