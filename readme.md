@@ -3,12 +3,14 @@
 Perform a case sensitive find for each of the keywprds below  and perform a replace-all:
   * Replace '**projectName**' -> the name of the project
   * Replace '**projectRootNamespace**' -> the name of the project root namespace
+  * Replace '**projectAssemblyName**' -> the name of the project assembly
   * Replace '**dbName**' -> the name of the database
 
 Examples:
 
   * Replace '**projectName**' with '**Activities**'
   * Replace '**projectRootNamespace**' with '**Focus.Activities**'
+  * Replace '**projectAssemblyName**' -> with '**focus.activities**'
   * Replace '**dbName**' with '**activities**'
 
 You can remove this section of the readme once the changes are applied.
