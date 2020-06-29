@@ -14,13 +14,11 @@ namespace ProjectRootNamespace.Api
     {
         public IConfiguration Configuration { get; }
 
-        public Startup(IConfiguration configuration)
-        {
+        public Startup(IConfiguration configuration) =>
             Configuration = configuration;
-        }
 
         // This method gets called by the runtime.
-        // Use this method to add services to the container.
+        // Use this method to add services to the DI container.
         public void ConfigureServices(IServiceCollection services)
         {
             // Load and register app settings in DI container

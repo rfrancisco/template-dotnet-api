@@ -28,9 +28,8 @@ namespace ProjectRootNamespace.Api.Infrastructure.Security
         /// <summary>
         /// Return a new access token using the refresh token.
         /// </summary>
-        /// <param name="refreshToken">The token used to refresh the access token.</param>
         /// <returns>The refreshed access token information if successful.</returns>
-        Task<AccessTokenDTO> RefeshAccessToken(string refreshToken);
+        Task<AccessTokenDTO> RefeshAccessToken();
 
         /// <summary>
         /// Return metadata information for the authenticated user.
@@ -95,34 +94,34 @@ namespace ProjectRootNamespace.Api.Infrastructure.Security
     public class UserInfoDTO
     {
         /// <summary>
-        /// The display name for the user (uaualy the username, email of fullname)
-        /// </summary>
-        string DisplayName { get; set; }
-
-        /// <summary>
         /// The user unique identifier (usualy the username or email)
         /// </summary>
-        string UniqueIdentifier { get; set; }
+        public string UniqueIdentifier { get; set; }
+
+        /// <summary>
+        /// The display name for the user (uaualy the username, email of fullname)
+        /// </summary>
+        public string DisplayName { get; set; }
 
         /// <summary>
         /// (Optional) The user email address
         /// </summary>
-        string Email { get; set; }
+        public string Email { get; set; }
 
         /// <summary>
-        /// (Optional) The user avatar
+        /// (Optional) The user photo or avatar
         /// </summary>
-        string Avatar { get; set; }
+        public string Photo { get; set; }
 
         /// <summary>
         /// (Optional) Aditional information regarding the authenticated user
         /// </summary>
-        IDictionary<string, string> Metadata { get; set; }
+        public IDictionary<string, string> Metadata { get; set; }
 
         /// <summary>
-        /// (Optional) The list of user roles
+        /// (Optional) The list of roles the user belongs to
         /// </summary>
-        public IDictionary<string, string> Roles { get; set; }
+        public IEnumerable<string> Roles { get; set; }
     }
 
     #endregion

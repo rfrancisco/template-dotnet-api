@@ -1,5 +1,6 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,14 +26,19 @@ namespace ProjectRootNamespace.Api.Infrastructure.Security.CustomAuthentication
 
         public Task<AccessTokenDTO> SignIn(SignInCredentialsDTO dto)
         {
-            if (dto.Username != "user" || dto.Password != "pass")
-            {
+            var isUser = dto.Username == "user" && dto.Password == "pass";
+            var isAdmin = dto.Username == "admin" && dto.Password == "pass";
+
+            if (!isUser && !isAdmin)
                 throw new ApiSecurityException(ApiSecurityErrors.AuthenticationError);
-            }
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.Upn, dto.Username)
+                new Claim(ClaimTypes.Upn, dto.Username),
+                new Claim("display_name", isUser ? "System User" : "System Administrator"),
+                new Claim(ClaimTypes.Email, isUser ? "user@focus.com" : "admin@focus.com"),
+                new Claim("photo", "https://static.wixstatic.com/media/a2d517_b155553cfec248378a8b6d73c7c17d5e~mv2.png/v1/fill/w_573,h_469/Focus%20bc%20favicon.png"),
+                new Claim(ClaimTypes.Role, isUser ? "Users" : "Admins"),
             };
 
             // Generates the Token
@@ -66,17 +72,33 @@ namespace ProjectRootNamespace.Api.Infrastructure.Security.CustomAuthentication
 
         public Task SignOut()
         {
-            return null;
+            // Clears the authorization cookie containing the access token
+            var options = new CookieOptions();
+            options.Expires = DateTimeOffset.Now.AddDays(-1);
+            options.HttpOnly = true;
+            _httpContext.Response.Cookies.Append("Authorization", "", options);
+
+            return Task.CompletedTask;
         }
 
-        public Task<AccessTokenDTO> RefeshAccessToken(string refreshToken)
+        public Task<AccessTokenDTO> RefeshAccessToken()
         {
-            return null;
+            throw new ApiValidationException("NOT_SUPPORTED", "Refresh token is not supported in this provider");
         }
 
         public Task<UserInfoDTO> GetUserInfo()
         {
-            return null;
+            var claims = _httpContext.User.Claims;
+            var retVal = new UserInfoDTO()
+            {
+                UniqueIdentifier = claims.FirstOrDefault(x => x.Type == ClaimTypes.Upn).Value,
+                DisplayName = claims.FirstOrDefault(x => x.Type == "display_name").Value,
+                Email = claims.FirstOrDefault(x => x.Type == ClaimTypes.Email).Value,
+                Photo = claims.FirstOrDefault(x => x.Type == "photo").Value,
+                Roles = claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value)
+            };
+
+            return Task.FromResult(retVal);
         }
     }
 }
