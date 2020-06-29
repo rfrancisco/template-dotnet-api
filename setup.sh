@@ -232,9 +232,12 @@ printf "Process completed in \033[1;33m$SECONDS\033[0m seconds!\n"
 printf "\n"
 printf "Next steps:\n"
 printf "  - Start database:    '\033[1;32mdocker-compose up\033[0m'\n"
-printf "  - Apply migrations:  '\033[1;32mcd src; dotnet ef migrations add Initial; dotnet ef database update;\033[0m'\n"
-printf "  - Start application: '\033[1;32mdotnet run\033[0m'\n"
+printf "  - Crteate migration: '\033[1;32mdotnet ef migrations add Initial -p ./src/api.csproj\033[0m'\n"
+printf "  - Apply migration:   '\033[1;32mdotnet ef database update -p ./src/api.csproj\033[0m'\n"
+printf "  - Start application: '\033[1;32mdotnet run -p ./src/api.csproj\033[0m'\n"
+printf "  - Test application:  '\033[1;32mdotnet test tests/api.tests.csproj\033[0m'\n"
 printf "  - Check the readme.md file for more information\n"
 printf "\n"
 
+dotnet ef migrations add Initial -p ./src/api.csproj
 
