@@ -35,6 +35,7 @@ namespace ProjectRootNamespace.Api.Infrastructure.Security.CustomAuthentication
             var claims = new[]
             {
                 new Claim(ClaimTypes.Upn, dto.Username),
+                new Claim("name", isUser ? "System User" : "System Administrator"),
                 new Claim("display_name", isUser ? "System User" : "System Administrator"),
                 new Claim(ClaimTypes.Email, isUser ? "user@focus.com" : "admin@focus.com"),
                 new Claim("photo", "https://static.wixstatic.com/media/a2d517_b155553cfec248378a8b6d73c7c17d5e~mv2.png/v1/fill/w_573,h_469/Focus%20bc%20favicon.png"),
@@ -93,6 +94,7 @@ namespace ProjectRootNamespace.Api.Infrastructure.Security.CustomAuthentication
             {
                 UniqueIdentifier = claims.FirstOrDefault(x => x.Type == ClaimTypes.Upn).Value,
                 DisplayName = claims.FirstOrDefault(x => x.Type == "display_name").Value,
+                Name = claims.FirstOrDefault(x => x.Type == "name").Value,
                 Email = claims.FirstOrDefault(x => x.Type == ClaimTypes.Email).Value,
                 Photo = claims.FirstOrDefault(x => x.Type == "photo").Value,
                 Roles = claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value)

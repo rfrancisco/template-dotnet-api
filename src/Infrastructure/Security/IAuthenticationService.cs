@@ -104,6 +104,11 @@ namespace ProjectRootNamespace.Api.Infrastructure.Security
         public string DisplayName { get; set; }
 
         /// <summary>
+        /// The name of the user (uaualy the username, email of fullname)
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
         /// (Optional) The user email address
         /// </summary>
         public string Email { get; set; }

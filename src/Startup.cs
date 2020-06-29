@@ -27,8 +27,8 @@ namespace ProjectRootNamespace.Api
             services.AddSwagger();
             services.AddEntityFramework(Configuration.GetConnectionString("Db"));
             services.AddHealthChecks().AddDbContextCheck<MainDbContext>();
-            //services.AddLisAuthentication(Configuration);
-            services.AddCustomAuthentication(Configuration);
+            services.AddLisAuthentication(Configuration);
+            //services.AddCustomAuthentication(Configuration);
             services.AddControllers();
             services.AddCoreServices();
             services.AddCustomExceptionHandler();
@@ -47,8 +47,8 @@ namespace ProjectRootNamespace.Api
             app.UseSwagger();
             app.UseRouting();
             app.UseCustomExceptionHandler();
-            //app.UseLisAuthentication();
-            app.UseCustomAuthentication();
+            app.UseLisAuthentication();
+            //app.UseCustomAuthentication();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHealthChecks("/health");

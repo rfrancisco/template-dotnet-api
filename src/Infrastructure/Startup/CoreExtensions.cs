@@ -25,7 +25,7 @@ namespace ProjectRootNamespace.Api.Infrastructure.Startup
             RegisterServices(services, ServiceLifetime.Scoped, "ProjectRootNamespace.Api.Services");
         }
 
-        #region Helper methods
+        #region Auxiliar methods
 
         /// <summary>
         /// Locate and register the services that match the specified namespace.

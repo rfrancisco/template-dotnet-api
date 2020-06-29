@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
+using ProjectRootNamespace.Api.Infrastructure.Security;
 using ProjectRootNamespace.Api.Infrastructure.Security.LisAuthentication;
 
 namespace ProjectRootNamespace.Api.Infrastructure.Startup
@@ -31,7 +32,7 @@ namespace ProjectRootNamespace.Api.Infrastructure.Startup
             var settings = section.Get<LisAuthenticationSettings>();
             services.Configure<LisAuthenticationSettings>(section);
 
-            services.AddScoped<ILisAuthenticationService, LisAuthenticationService>();
+            services.AddScoped<IAuthenticationService, LisAuthenticationService>();
 
             AddLisAuthentication(services, settings.PublicKey);
             AddLisHttpClient(services, settings.BaseUrl);
@@ -79,8 +80,8 @@ namespace ProjectRootNamespace.Api.Infrastructure.Startup
                             {
                                 try
                                 {
-                                    var svc = context.HttpContext.RequestServices.GetRequiredService<ILisAuthenticationService>();
-                                    var newToken = svc.RefreshAccessToken().GetAwaiter().GetResult();
+                                    var svc = context.HttpContext.RequestServices.GetRequiredService<IAuthenticationService>();
+                                    var newToken = svc.RefeshAccessToken().GetAwaiter().GetResult();
 
                                     // Append the new tokens cookies to the response
                                     res.Headers.Clear();
