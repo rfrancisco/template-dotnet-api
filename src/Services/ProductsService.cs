@@ -2,12 +2,12 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using ProjectRootNamespace.Api.DataAccess;
-using ProjectRootNamespace.Api.DataAccess.Entities;
-using ProjectRootNamespace.Api.Infrastructure;
-using ProjectRootNamespace.Api.Infrastructure.Exceptions;
+using projectRootNamespace.Api.DataAccess;
+using projectRootNamespace.Api.DataAccess.Entities;
+using projectRootNamespace.Api.Infrastructure;
+using projectRootNamespace.Api.Infrastructure.Exceptions;
 
-namespace ProjectRootNamespace.Api.Services
+namespace projectRootNamespace.Api.Services
 {
     public interface IProductsService
     {

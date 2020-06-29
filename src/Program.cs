@@ -1,14 +1,14 @@
 using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using ProjectRootNamespace.Api.Infrastructure;
+using projectRootNamespace.Api.Infrastructure;
 using Serilog;
 
-namespace ProjectRootNamespace.Api
+namespace projectRootNamespace.Api
 {
     public class Program
     {
-        public const string COMPONENT_TITLE = "ProjectName - Api";
+        public const string COMPONENT_TITLE = "projectName - Api";
         public const string SERVER_URL = "http://0.0.0.0:5000";
         public const string SERVER_BASE_URL = "api";
 

@@ -1,6 +1,6 @@
 using System;
 
-namespace ProjectRootNamespace.Api.Infrastructure.DataAccess
+namespace projectRootNamespace.Api.Infrastructure.DataAccess
 {
     public interface IIdentityEntity<TKey>
     {

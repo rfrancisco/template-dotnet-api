@@ -1,4 +1,4 @@
-namespace ProjectRootNamespace.Api.Infrastructure
+namespace projectRootNamespace.Api.Infrastructure
 {
     public static class ComponentInfo
     {

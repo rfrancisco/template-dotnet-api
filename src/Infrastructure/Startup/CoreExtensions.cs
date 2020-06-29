@@ -4,7 +4,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ProjectRootNamespace.Api.Infrastructure.Startup
+namespace projectRootNamespace.Api.Infrastructure.Startup
 {
     /// <summary>
     /// Extension methods for setting up core services.
@@ -19,10 +19,10 @@ namespace ProjectRootNamespace.Api.Infrastructure.Startup
             // originated the call to the specified service.
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            // Add all services in the ProjectRootNamespace.Api.Services namespace
+            // Add all services in the projectRootNamespace.Api.Services namespace
             // to the DI container as Transient (one instance per request scope).
             // Depending
-            RegisterServices(services, ServiceLifetime.Scoped, "ProjectRootNamespace.Api.Services");
+            RegisterServices(services, ServiceLifetime.Scoped, "projectRootNamespace.Api.Services");
         }
 
         #region Auxiliar methods

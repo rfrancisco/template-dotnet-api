@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ProjectRootNamespace.Api.Infrastructure
+namespace projectRootNamespace.Api.Infrastructure
 {
     [ApiController]
     [Authorize]

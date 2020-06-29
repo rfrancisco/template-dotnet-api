@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using ProjectRootNamespace.Api.Infrastructure.DataAccess;
+using projectRootNamespace.Api.Infrastructure.DataAccess;
 
-namespace ProjectRootNamespace.Api.DataAccess.Entities
+namespace projectRootNamespace.Api.DataAccess.Entities
 {
     public class Product : CoreEntity<int>
     {

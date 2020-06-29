@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
-namespace ProjectRootNamespace.Api.Infrastructure.Security
+namespace projectRootNamespace.Api.Infrastructure.Security
 {
     /// <summary>
     /// Common interface that authentication providers must

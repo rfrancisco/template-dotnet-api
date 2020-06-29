@@ -1,6 +1,6 @@
 using System;
 
-namespace ProjectRootNamespace.Api.Infrastructure.Security.LisAuthentication
+namespace projectRootNamespace.Api.Infrastructure.Security.LisAuthentication
 {
     public class LisAuthenticationSettings
     {

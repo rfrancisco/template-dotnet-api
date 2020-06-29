@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace ProjectRootNamespace.Api.Infrastructure.Controllers
+namespace projectRootNamespace.Api.Infrastructure.Controllers
 {
     [Route("health")]
     public class HealthController : Controller

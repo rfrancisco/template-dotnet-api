@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using ProjectRootNamespace.Api.Infrastructure.Exceptions;
+using projectRootNamespace.Api.Infrastructure.Exceptions;
 
-namespace ProjectRootNamespace.Api.Infrastructure.Security.CustomAuthentication
+namespace projectRootNamespace.Api.Infrastructure.Security.CustomAuthentication
 {
     public class CustomAuthenticationService : IAuthenticationService
     {

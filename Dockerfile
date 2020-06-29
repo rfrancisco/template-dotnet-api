@@ -34,4 +34,4 @@ EXPOSE 5000
 # expose https port
 EXPOSE 5001
 
-ENTRYPOINT ["dotnet", "dotnet projectRootNamespace.api.dll"]
+ENTRYPOINT ["dotnet", "dotnet projectAssemblyName.api.dll"]

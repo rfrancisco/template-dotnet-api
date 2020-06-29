@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace ProjectRootNamespace.Api.Infrastructure.DataAccess
+namespace projectRootNamespace.Api.Infrastructure.DataAccess
 {
     public class CoreEntity<TEntityKey> : ISoftDeletableEntity, IAuditableEntity, IIdentityEntity<TEntityKey>
     {

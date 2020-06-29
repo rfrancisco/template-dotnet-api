@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace ProjectRootNamespace.Api.Infrastructure.Controllers
+namespace projectRootNamespace.Api.Infrastructure.Controllers
 {
     [AllowAnonymous]
     [Route("")]

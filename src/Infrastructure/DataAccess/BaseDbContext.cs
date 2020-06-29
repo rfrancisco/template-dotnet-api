@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace ProjectRootNamespace.Api.Infrastructure.DataAccess
+namespace projectRootNamespace.Api.Infrastructure.DataAccess
 {
     public abstract class BaseDbContext : DbContext
     {

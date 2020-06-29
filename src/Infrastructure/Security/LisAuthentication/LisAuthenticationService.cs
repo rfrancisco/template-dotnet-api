@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using ProjectRootNamespace.Api.Infrastructure.Exceptions;
+using projectRootNamespace.Api.Infrastructure.Exceptions;
 
-namespace ProjectRootNamespace.Api.Infrastructure.Security.LisAuthentication
+namespace projectRootNamespace.Api.Infrastructure.Security.LisAuthentication
 {
     public class LisAuthenticationService : IAuthenticationService
     {

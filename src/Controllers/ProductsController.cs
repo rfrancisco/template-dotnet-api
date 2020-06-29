@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ProjectRootNamespace.Api.Services;
-using ProjectRootNamespace.Api.Infrastructure;
+using projectRootNamespace.Api.Services;
+using projectRootNamespace.Api.Infrastructure;
 
-namespace ProjectRootNamespace.Api.Controllers
+namespace projectRootNamespace.Api.Controllers
 {
     [Route("/products")]
     public class ProductsController : BaseController

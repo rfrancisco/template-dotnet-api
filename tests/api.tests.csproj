@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <IsPackable>false</IsPackable>
-    <RootNamespace>ProjectRootNamespace.Api.Tests</RootNamespace>
-    <AssemblyName>projectRootNamespace.api.tests</AssemblyName>
+    <RootNamespace>projectRootNamespace.Api.Tests</RootNamespace>
+    <AssemblyName>projectAssemblyName.api.tests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

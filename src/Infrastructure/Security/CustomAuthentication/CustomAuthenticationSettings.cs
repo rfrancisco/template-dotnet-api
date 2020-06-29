@@ -1,6 +1,6 @@
 using System;
 
-namespace ProjectRootNamespace.Api.Infrastructure.Security.CustomAuthentication
+namespace projectRootNamespace.Api.Infrastructure.Security.CustomAuthentication
 {
     public class CustomAuthenticationSettings
     {

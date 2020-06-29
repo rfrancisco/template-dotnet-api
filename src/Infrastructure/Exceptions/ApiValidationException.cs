@@ -1,4 +1,4 @@
-namespace ProjectRootNamespace.Api.Infrastructure.Exceptions
+namespace projectRootNamespace.Api.Infrastructure.Exceptions
 {
     public class ApiValidationException : ApiException
     {

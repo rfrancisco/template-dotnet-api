@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using ProjectRootNamespace.Api.DataAccess.Entities;
+using projectRootNamespace.Api.DataAccess.Entities;
 
-namespace ProjectRootNamespace.Api.DataAccess.Seed
+namespace projectRootNamespace.Api.DataAccess.Seed
 {
     // Development Seed Data
     public class DevSeedDataGenerator

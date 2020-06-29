@@ -1,8 +1,8 @@
-using ProjectRootNamespace.Api.DataAccess;
+using projectRootNamespace.Api.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ProjectRootNamespace.Api.Infrastructure.Startup
+namespace projectRootNamespace.Api.Infrastructure.Startup
 {
     /// <summary>
     /// Extension methods to setup entity framework

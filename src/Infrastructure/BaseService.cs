@@ -2,14 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using ProjectRootNamespace.Api.DataAccess;
+using projectRootNamespace.Api.DataAccess;
 using System.Linq;
 using System.Linq.Expressions;
-using ProjectRootNamespace.Api.Infrastructure.DataAccess;
+using projectRootNamespace.Api.Infrastructure.DataAccess;
 using Microsoft.AspNetCore.Http;
-using ProjectRootNamespace.Api.Infrastructure.Exceptions;
+using projectRootNamespace.Api.Infrastructure.Exceptions;
 
-namespace ProjectRootNamespace.Api.Infrastructure
+namespace projectRootNamespace.Api.Infrastructure
 {
     public abstract class BaseService<TEntity, TEntityKey> where TEntity : class, IIdentityEntity<TEntityKey>
     {

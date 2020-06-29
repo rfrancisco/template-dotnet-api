@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
-using ProjectRootNamespace.Api.DataAccess.Seed;
-using ProjectRootNamespace.Api.Infrastructure.DataAccess;
+using projectRootNamespace.Api.DataAccess.Seed;
+using projectRootNamespace.Api.Infrastructure.DataAccess;
 
-namespace ProjectRootNamespace.Api.DataAccess
+namespace projectRootNamespace.Api.DataAccess
 {
     public class MainDbContext : BaseDbContext
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace ProjectRootNamespace.Api.Infrastructure.Exceptions
+namespace projectRootNamespace.Api.Infrastructure.Exceptions
 {
     public enum ApiSecurityErrors
     {

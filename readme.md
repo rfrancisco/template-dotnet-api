@@ -1,23 +1,21 @@
 # First things to do
 
 Perform a case sensitive find for each of the keywprds below  and perform a replace-all:
-  * Replace '**projectName**' -> the name of the project starting in lowercase
-  * Replace '**ProjectName**' -> the name of the project starting in uppercase
-  * Replace '**projectRootNamespace**' -> the name of the project root namespace starting each namespace section in lowercase.
-  * Replace '**ProjectRootNamespace**' -> the name of the project root namespace starting each namespace section in uppercase.
+  * Replace '**projectName**' -> the name of the project
+  * Replace '**projectRootNamespace**' -> the name of the project root namespace
+  * Replace '**dbName**' -> the name of the database
 
 Examples:
 
-  * Replace '**projectName**' with '**activities**'
-  * Replace '**ProjectName**' with '**Activities**'
-  * Replace '**projectRootNamespace**' with '**focus.activities**'
-  * Replace '**ProjectRootNamespace**' with '**Focus.Activities**'
+  * Replace '**projectName**' with '**Activities**'
+  * Replace '**projectRootNamespace**' with '**Focus.Activities**'
+  * Replace '**dbName**' with '**activities**'
 
 You can remove this section of the readme once the changes are applied.
 
 Next you should look for 'TODO:' markers to see what else needs to be done and where.
 
-# ProjectName Api
+# projectName Api
 
 [INSERT DESCRIPTION]
 

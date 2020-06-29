@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ProjectRootNamespace.Api.Infrastructure;
-using ProjectRootNamespace.Api.DataAccess;
-using ProjectRootNamespace.Api.Infrastructure.Startup;
+using projectRootNamespace.Api.Infrastructure;
+using projectRootNamespace.Api.DataAccess;
+using projectRootNamespace.Api.Infrastructure.Startup;
 
-namespace ProjectRootNamespace.Api
+namespace projectRootNamespace.Api
 {
     public class Startup
     {

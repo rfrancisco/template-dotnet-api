@@ -16,10 +16,10 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
-using ProjectRootNamespace.Api.Infrastructure.Security;
-using ProjectRootNamespace.Api.Infrastructure.Security.LisAuthentication;
+using projectRootNamespace.Api.Infrastructure.Security;
+using projectRootNamespace.Api.Infrastructure.Security.LisAuthentication;
 
-namespace ProjectRootNamespace.Api.Infrastructure.Startup
+namespace projectRootNamespace.Api.Infrastructure.Startup
 {
     /// <summary>
     /// Extension methods to setup lis integration

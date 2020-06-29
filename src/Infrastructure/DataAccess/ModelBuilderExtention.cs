@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 
-namespace ProjectRootNamespace.Api.Infrastructure.DataAccess
+namespace projectRootNamespace.Api.Infrastructure.DataAccess
 {
     public static class ModelBuilderExtension
     {

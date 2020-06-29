@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using ProjectRootNamespace.Api.Infrastructure.Security;
-using ProjectRootNamespace.Api.Infrastructure.Security.CustomAuthentication;
+using projectRootNamespace.Api.Infrastructure.Security;
+using projectRootNamespace.Api.Infrastructure.Security.CustomAuthentication;
 
-namespace ProjectRootNamespace.Api.Infrastructure.Startup
+namespace projectRootNamespace.Api.Infrastructure.Startup
 {
     /// <summary>
     /// Extension methods to setup lis integration

@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using ProjectRootNamespace.Api.Infrastructure.Security;
+using projectRootNamespace.Api.Infrastructure.Security;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 
-namespace ProjectRootNamespace.Api.Infrastructure.Controllers
+namespace projectRootNamespace.Api.Infrastructure.Controllers
 {
     [Route("/authentication")]
     public class AuthenticationController : BaseController
