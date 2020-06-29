@@ -186,18 +186,18 @@ function set_auth_provider() {
     fi
 
     if [ "$provider" = "lis" ]; then
-        sed -i "" "s/\/\/services.AddLisAuthentication/services.AddLisAuthentication/g" Startup.cs
-        sed -i "" "s/\/\/app.UseLisAuthentication/app.UseLisAuthentication/g" Startup.cs
-        sed -i "" "s/\/\/\[Authorize\]/\[Authorize\]/g" Infrastructure/BaseController.cs
-        sed -i "" "s/abstract class/class/g" Infrastructure/Controllers/AuthenticationController.cs
+        sed -i "" "s/\/\/services.AddLisAuthentication/services.AddLisAuthentication/g" src/Startup.cs
+        sed -i "" "s/\/\/app.UseLisAuthentication/app.UseLisAuthentication/g" src/Startup.cs
+        sed -i "" "s/\/\/\[Authorize\]/\[Authorize\]/g" src/Infrastructure/BaseController.cs
+        sed -i "" "s/abstract class/class/g" src/Infrastructure/Controllers/AuthenticationController.cs
         return
     fi
 
     if [ "$provider" = "custom" ]; then
-        sed -i "" "s/\/\/services.AddCustomAuthentication/services.AddCustomAuthentication/g" Startup.cs
-        sed -i "" "s/\/\/app.UseCustomAuthentication/app.UseCustomAuthentication/g" Startup.cs
-        sed -i "" "s/\/\/\[Authorize\]/\[Authorize\]/g" Infrastructure/BaseController.cs
-        sed -i "" "s/abstract class/class/g" Infrastructure/Controllers/AuthenticationController.cs
+        sed -i "" "s/\/\/services.AddCustomAuthentication/services.AddCustomAuthentication/g" src/Startup.cs
+        sed -i "" "s/\/\/app.UseCustomAuthentication/app.UseCustomAuthentication/g" src/Startup.cs
+        sed -i "" "s/\/\/\[Authorize\]/\[Authorize\]/g" src/Infrastructure/BaseController.cs
+        sed -i "" "s/abstract class/class/g" src/Infrastructure/Controllers/AuthenticationController.cs
         return
     fi
 }
@@ -225,3 +225,4 @@ set_auth_provider "$AUTH_PROVIDER"
 printf "\n"
 printf "Process completed \033[1;33m$SECONDS\033[0m seconds!\n"
 printf "\n"
+
