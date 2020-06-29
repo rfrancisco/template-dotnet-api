@@ -13,8 +13,8 @@ namespace ProjectRootNamespace.Api.Services
     {
         Task<ProductDTO> Find(int id);
         Task<PagedResultsDTO<ProductListDTO>> FindMany(string searchTerm = "", int page = 0, int pageSize = 0);
-        Task<ProductDTO> Create(ProductCreateDTO model);
-        Task Update(int id, ProductUpdateDTO model);
+        Task<ProductDTO> Create(ProductCreateDTO dto);
+        Task Update(int id, ProductUpdateDTO dto);
         Task Delete(int id);
     }
 
@@ -38,32 +38,32 @@ namespace ProjectRootNamespace.Api.Services
                 pageSize);
         }
 
-        public async Task<ProductDTO> Create(ProductCreateDTO model)
+        public async Task<ProductDTO> Create(ProductCreateDTO dto)
         {
-            if (await DbExists(x => x.Name.ToLower().Trim() == model.Name.ToLower().Trim()))
+            if (await DbExists(x => x.Name.ToLower().Trim() == dto.Name.ToLower().Trim()))
                 throw new ApiValidationException("DUPLICATE_NAME", "A record with the same name already exists");
 
             var dbRecord = new Product()
             {
-                Name = model.Name.Trim(),
-                Description = model.Description.Trim(),
-                Price = model.Price,
-                Stock = model.Stock
+                Name = dto.Name.Trim(),
+                Description = dto.Description.Trim(),
+                Price = dto.Price,
+                Stock = dto.Stock
             };
 
             return await Find((await DbCreate(dbRecord)).Id);
         }
 
-        public async Task Update(int id, ProductUpdateDTO model)
+        public async Task Update(int id, ProductUpdateDTO dto)
         {
-            if (await DbExists(x => x.Name.ToLower().Trim() == model.Name.ToLower().Trim() && x.Id != id))
+            if (await DbExists(x => x.Name.ToLower().Trim() == dto.Name.ToLower().Trim() && x.Id != id))
                 throw new ApiValidationException("DUPLICATE_NAME", "A record with the same name already exists");
 
             var dbRecord = await DbFind(x => x.Id == id);
-            dbRecord.Name = model.Name.Trim();
-            dbRecord.Description = model.Description.Trim();
-            dbRecord.Price = model.Price;
-            dbRecord.Stock = model.Stock;
+            dbRecord.Name = dto.Name.Trim();
+            dbRecord.Description = dto.Description.Trim();
+            dbRecord.Price = dto.Price;
+            dbRecord.Stock = dto.Stock;
 
             await DbUpdate(dbRecord);
         }

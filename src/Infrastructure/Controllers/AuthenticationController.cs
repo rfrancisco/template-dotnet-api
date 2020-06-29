@@ -1,11 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using ProjectRootNamespace.Api.Infrastructure;
 using ProjectRootNamespace.Api.Infrastructure.Security;
 using Microsoft.AspNetCore.Authorization;
-using Swashbuckle.AspNetCore.Annotations;
 using System.Threading.Tasks;
 
-namespace ProjectRootNamespace.Api.Controllers
+namespace ProjectRootNamespace.Api.Infrastructure.Controllers
 {
     [Route("/authentication")]
     public class AuthenticationController : BaseController
@@ -27,7 +25,6 @@ namespace ProjectRootNamespace.Api.Controllers
         /// <response code="400">If the credentials dont match a valid user.</response>
         [AllowAnonymous]
         [HttpPut("signIn")]
-        [SwaggerOperation(Tags = new[] { "Authentication" })]
         public Task<AccessTokenDTO> SignIn(SignInCredentialsDTO dto) =>
             _svc.SignIn(dto);
 
@@ -38,7 +35,6 @@ namespace ProjectRootNamespace.Api.Controllers
         /// <response code="200">If successful.</response>
         /// <response code="401">Request is not unauthorized.</response>
         [HttpPut("signOut")]
-        [SwaggerOperation(Tags = new[] { "Authentication" })]
         public Task SignOut() =>
             _svc.SignOut();
 
@@ -53,7 +49,6 @@ namespace ProjectRootNamespace.Api.Controllers
         /// <response code="400">Invalid request.</response>
         /// <response code="401">Request is not unauthorized.</response>
         [HttpPut("refreshToken")]
-        [SwaggerOperation(Tags = new[] { "Authentication" })]
         public Task<AccessTokenDTO> RefeshAccessToken() =>
             _svc.RefeshAccessToken();
 
@@ -63,7 +58,6 @@ namespace ProjectRootNamespace.Api.Controllers
         /// <response code="200">Returns information for the authenticated user.</response>
         /// <response code="401">Request is not unauthorized.</response>
         [HttpGet("userInfo")]
-        [SwaggerOperation(Tags = new[] { "Authentication" })]
         public Task<UserInfoDTO> GetUserInfo() =>
             _svc.GetUserInfo();
     }

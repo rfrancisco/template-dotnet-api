@@ -1,6 +1,6 @@
 # First things to do
 
-* Perform a case sensitive find for each of the keywprds below  and perform a replace-all:
+Perform a case sensitive find for each of the keywprds below  and perform a replace-all:
   * Replace '**projectName**' -> the name of the project starting in lowercase
   * Replace '**ProjectName**' -> the name of the project starting in uppercase
   * Replace '**projectRootNamespace**' -> the name of the project root namespace starting each namespace section in lowercase.
@@ -15,10 +15,28 @@ Examples:
 
 You can remove this section of the readme once the changes are applied.
 
+Next you should look for 'TODO:' markers to see what else needs to be done and where.
+
 # ProjectName Api
 
 [INSERT DESCRIPTION]
 
+## Index
+ * [Setup](#setup)
+  * [How to run the application](#how-to-run-the-application)
+  * [How to test the application](#how-to-test-the-application)
+  * [How to configure the application](#how-to-configure-the-application)
+  * [How to configure the swagger UI](#how-to-configure-swagger-ui)
+  * [How to configure Authentication/Authorization](#how-to-configure-authentication-authorization)
+    + [Enable or switch to the LIS auth provider](#enable-or-switch-to-the-lis-auth-provider)
+    + [Enable or switch to the Custom auth provider](#enable-or-switch-to-the-custom-auth-provider)
+    + [Disable auth](#disable-auth)
+  * [How to work with database (using database code-first)](#how-to-work-with-database--using-database-code-first-)
+  * [How to create a migration](#how-to-create-a-migration)
+  * [How to apply database changes automatically](#how-to-apply-database-changes-automatically)
+  * [How to apply database changes manually](#how-to-apply-database-changes-manually)
+  * [How to recreate the database](#how-to-recreate-the-database)
+  * [Useful commands](#useful-commands)
 ## Setup
 
 In order to be able to compile, run and test this component the following requirements need to be installed:
@@ -84,6 +102,51 @@ The settings can be merged/overriden by appsettings files specific to an environ
 - Read from *appsettings.json*
 - Read from *appsettings.{environment}.json* and merge/override
 - Read from environment variables and merge/override (Hierarchical settings can be set with __ (ex: Settings__JwtExpiration))
+
+## How to configure swagger UI
+
+All files necessary to customize the swagger UI can be found inside <code>/wwwroot/docs</code>.
+If you need more control you can create an index.html file inside this folder that will replace the default one.
+
+## How to configure Authentication/Authorization
+
+The templace comes with 2 auth providers, a LIS provider that is ready to use and only needs to be configured, and a custom provider that is intended to be a starting point for a custom implementation.
+By default, the template comes with authentication using the custom provider enabled.
+
+### Enable or switch to the LIS auth provider
+
+Follow the steps below to enable LIS auth provider:
+
+* In <code>/Startup.cs</code>
+  * Add or uncomment a call to <code>services.AddLisAuthentication()</code> in the 'ConfigureServices' method. The call must be placed before the call to 'services.AddControllers()'.
+  * Add or uncomment a call to <code>app.UseLisAuthentication()</code> in the 'Configure' method. The call must be placed between the call to 'app.UseRouting()' and 'app.UseEndpoints()'.
+* Remove the <code>abstract</code> keyword from the class definition at <code>/Infrastructure/Controllers/AuthenticationController.cs</code>.
+* Add the <code>[Authorize]</code> attribute to the class definition at <code>/Infrastructure/BaseController.cs</code>
+* Update the necessary settings in appsettings.json files under **Settings->Authentication->Lis**
+
+To be able to develop using the LIS provider you need to update your hosts file with a subdomain of the LIS instance url you intend to use. For example, if you intend to use the LIS at **dev.city-platform.com** you need to add a subdomain of that to your hosts file, something like **local.dev.city-platform.com**.
+Now all you need to do is open a browser using **local.dev.city-platform.com** instead of **localhost** and the auth should work.
+
+### Enable or switch to the Custom auth provider
+
+Follow the steps below to enable Custom auth provider:
+
+* In <code>/Startup.cs</code>
+  * Add or uncomment a call to <code>services.AddCustomAuthentication()</code> in the 'ConfigureServices' method. The call must be placed before the call to 'services.AddControllers()'.
+  * Add or uncomment a call to <code>app.UseCustomAuthentication()</code> in the 'Configure' method. The call must be placed between the call to 'app.UseRouting()' and 'app.UseEndpoints()'.
+* Remove the <code>abstract</code> keyword from the class definition at <code>/Infrastructure/Controllers/AuthenticationController.cs</code>.
+* Add the <code>[Authorize]</code> attribute to the class definition at <code>/Infrastructure/BaseController.cs</code>
+* Update the necessary settings in appsettings.json files under **Settings->Authentication->Custom**
+
+You can test the sign-in using the following credentials 'user/pass' or 'admin/pass'.
+
+### Disable auth
+
+Follow the steps below to disable auth entirely:
+
+* In <code>/Startup.cs</code> comment or remove calls to **AddCustomAuthentication**, **AddLisAuthentication**, **UseCustomAuthentication** and **UseLisAuthentication**.
+* Add the <code>abstract</code> keyword to the class definition at <code>/Infrastructure/Controllers/AuthenticationController.cs</code>
+* Remove the <code>[Authorize]</code> attribute from <code>/Infrastructure/BaseController.cs</code>
 
 ## How to work with database (using database code-first)
 

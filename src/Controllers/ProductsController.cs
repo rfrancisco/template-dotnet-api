@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
 using ProjectRootNamespace.Api.Services;
 using ProjectRootNamespace.Api.Infrastructure;
 
@@ -26,7 +25,6 @@ namespace ProjectRootNamespace.Api.Controllers
         /// <response code="200">Return the list of records found.</response>
         /// <response code="400">Bad request.</response>
         [HttpGet]
-        [SwaggerOperation(Tags = new[] { "Products" })]
         public Task<PagedResultsDTO<ProductListDTO>> FindMany([FromQuery] string searchTerm, [FromQuery] int page = 0, [FromQuery] int pageSize = 0) =>
              _svc.FindMany(searchTerm, page, pageSize);
 
@@ -41,38 +39,35 @@ namespace ProjectRootNamespace.Api.Controllers
         /// <response code="400">Bad request.</response>
         /// <response code="404">Record not found.</response>
         [HttpGet("{id}")]
-        [SwaggerOperation(Tags = new[] { "Products" })]
         public Task<ProductDTO> Find(int id) =>
              _svc.Find(id);
 
         /// <summary>
         /// Create a new product.
         /// </summary>
-        /// <param name="model">The record creation model.</param>
+        /// <param name="dto">The record creation dto.</param>
         /// <returns>The record that was created</returns>
         /// <response code="401">Request is not unauthorized.</response>
         /// <response code="403">Operation is forbidden.</response>
         /// <response code="201">Return the record created.</response>
         /// <response code="400">Bad request.</response>
         [HttpPost]
-        [SwaggerOperation(Tags = new[] { "Products" })]
-        public Task<ProductDTO> Create(ProductCreateDTO model) =>
-             _svc.Create(model);
+        public Task<ProductDTO> Create(ProductCreateDTO dto) =>
+             _svc.Create(dto);
 
         /// <summary>
         /// Updates an existing product.
         /// </summary>
         /// <param name="id">The record unique identifier.</param>
-        /// <param name="model">The record update model.</param>
+        /// <param name="dto">The record update dto.</param>
         /// <response code="401">Request is not unauthorized.</response>
         /// <response code="403">Operation is forbidden.</response>
         /// <response code="204">Operation was successful.</response>
         /// <response code="400">Bad request.</response>
         /// <response code="404">Record not found.</response>
         [HttpPut("{id}")]
-        [SwaggerOperation(Tags = new[] { "Products" })]
-        public Task Update(int id, ProductUpdateDTO model) =>
-             _svc.Update(id, model);
+        public Task Update(int id, ProductUpdateDTO dto) =>
+             _svc.Update(id, dto);
 
         /// <summary>
         /// Deletes an existing product.
@@ -84,7 +79,6 @@ namespace ProjectRootNamespace.Api.Controllers
         /// <response code="400">Bad request.</response>
         /// <response code="404">Record not found.</response>
         [HttpDelete("{id}")]
-        [SwaggerOperation(Tags = new[] { "Products" })]
         public Task Delete(int id) =>
              _svc.Delete(id);
     }
