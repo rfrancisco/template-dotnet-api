@@ -86,9 +86,9 @@ function validate_project_name_argument() {
     # to select it. An empty response defaults to "build"
     if [ "$arg" = "" ]; then
         # Asks the user to specify the action to perform if the value was not provided via command line agument
-        read -r -p "Please specify the project name [HelloWorld] " PROJECT_NAME
+        read -r -p "Please specify the project name [Demo] " PROJECT_NAME
         if [ "$PROJECT_NAME" = "" ]; then
-            PROJECT_NAME="HelloWorld"
+            PROJECT_NAME="Demo"
         fi
     else
         PROJECT_NAME=$arg
@@ -102,9 +102,9 @@ function validate_root_namespace_argument() {
     # to select it. An empty response defaults to "dev"
     if [ "$arg" = "" ]; then
         # Asks the user to specify the environment if the value was not provided via command line agument
-        read -r -p "Please specify the root namespace [HelloWorld] " ROOT_NAMESPACE
+        read -r -p "Please specify the root namespace [Focus.Demo] " ROOT_NAMESPACE
         if [ "$ROOT_NAMESPACE" = "" ]; then
-            ROOT_NAMESPACE="HelloWorld"
+            ROOT_NAMESPACE="Focus.Demo"
         fi
     else
         ROOT_NAMESPACE=$arg
@@ -221,6 +221,7 @@ replace_all "projectRootNamespace" "$ROOT_NAMESPACE"
 replace_all "projectAssemblyName" "$(echo "$ROOT_NAMESPACE" | awk '{print tolower($0)}')"
 replace_all "dbName" "$DB_NAME"
 set_auth_provider "$AUTH_PROVIDER"
+rm setup.sh
 
 printf "\n"
 printf "Process completed \033[1;33m$SECONDS\033[0m seconds!\n"

@@ -1,5 +1,7 @@
 # First things to do
 
+Run 'setup.sh' or:
+
 Perform a case sensitive find for each of the keywprds below  and perform a replace-all:
   * Replace '**projectName**' -> the name of the project
   * Replace '**projectRootNamespace**' -> the name of the project root namespace
