@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace projectRootNamespace.Api.Infrastructure
 {
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public abstract class BaseController : ControllerBase
     {
         // TODO: Place logic common to all or most controllers here.

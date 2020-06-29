@@ -38,12 +38,15 @@ ROOT_NAMESPACE=
 # The database name.
 DB_NAME=
 
+# The authentication provider to use. Possible values are 'none', 'lis' ,'custom'
+AUTH_PROVIDER=none
+
 # The path of the deployment process log file
 LOG_FILE=/var/tmp/setup.log
 
 function write_usage() {
     printf "\n"
-    printf "Usage: bash setup.sh <project_name> <root_namespace> <db_name>\n"
+    printf "Usage: bash setup.sh <project_name> <root_namespace> <db_name> <auth_provider>\n"
     printf "\n"
     printf "Arguments:\n"
     printf "  - project_name:  The project name.\n"
@@ -53,9 +56,13 @@ function write_usage() {
     printf "                   Example: 'Focus.Activities'\n"
     printf "\n"
     printf "  - db_name:       The name of the database. The name will\n"
-    printf "                   concatenated with '-dev', '-qa' and'-prod'\n"
+    printf "                   concatenated with '-dev', '-qa' and '-prod'\n"
     printf "                   for the different environments.\n"
     printf "                   Example: 'activities'\n"
+    printf "\n"
+    printf "  - auth_provider: The auth provider to use. Possible value\n"
+    printf "                   are 'none', 'lis' and 'custom'.\n"
+    printf "                   Default is 'custom'.\n"
     printf "\n"
 }
 
@@ -63,6 +70,7 @@ function validate_arguments() {
     validate_project_name_argument "$1"
     validate_root_namespace_argument "$2"
     validate_db_name_argument "$3"
+    validate_auth_provider_argument "$4"
 }
 
 function validate_project_name_argument() {
@@ -119,6 +127,28 @@ function validate_db_name_argument() {
     fi
 }
 
+function validate_auth_provider_argument() {
+    arg=$1
+
+    # If the auth provider has not been specified as an argument we ask the user
+    # to select it. An empty response defaults to "custom"
+    if [ "$arg" = "" ]; then
+        # Asks the user to specify the auth provider if the value was not provided via command line agument
+        read -r -p "Please specify the auth provider [custom] " AUTH_PROVIDER
+        if [ "$AUTH_PROVIDER" = "" ]; then
+            AUTH_PROVIDER="custom"
+        fi
+    else
+        AUTH_PROVIDER=$arg
+    fi
+    if [ ! "$AUTH_PROVIDER" = "none" ] && [ ! "$AUTH_PROVIDER" = "lis" ] && [ ! "$AUTH_PROVIDER" = "custom" ]; then
+        printf "\n"
+        printf "[\033[1;31mERROR\033[0m] Invalid value for <auth_provider>. Check possible values below.\n"
+        write_usage
+        exit 1
+    fi
+}
+
 function print_settings() {
 
     printf "\n"
@@ -129,8 +159,9 @@ function print_settings() {
     printf "  - Log file:       $LOG_FILE\n"
     printf "  - Project name:   $PROJECT_NAME\n"
     printf "  - Root namespace: $ROOT_NAMESPACE.Api\n"
-    printf "  - DB name:        $DB_NAME-dev/-qa/-prd\n"
+    printf "  - DB name:        $DB_NAME-(dev|qa|prd)\n"
     printf "  - Assembly name:  $(echo "$ROOT_NAMESPACE" | awk '{print tolower($0)}').api.dll\n"
+    printf "  - Auth provider:  $AUTH_PROVIDER\n"
     printf "\n"
 }
 
@@ -147,33 +178,45 @@ function ask_confirmation() {
     printf "\n"
 }
 
+function set_auth_provider() {
+    provider=$1
+
+    if [ "$provider" = "none" ]; then
+        return
+    fi
+
+    if [ "$provider" = "lis" ]; then
+        sed -i "" "s/\/\/services.AddLisAuthentication/services.AddLisAuthentication/g" Startup.cs
+        sed -i "" "s/\/\/app.UseLisAuthentication/app.UseLisAuthentication/g" Startup.cs
+        return
+    fi
+
+    if [ "$provider" = "custom" ]; then
+        sed -i "" "s/\/\/services.AddCustomAuthentication/services.AddCustomAuthentication/g" Startup.cs
+        sed -i "" "s/\/\/app.UseCustomAuthentication/app.UseCustomAuthentication/g" Startup.cs
+        return
+    fi
+}
+
 function replace_all() {
     source=$1
     target=$2
-    echo "find . -type f -not -path '*/\.*' -not -name 'setup.sh' exec  sed -i -e 's/$source/$target/g' {} \;"
-}
-
-function replace_project_name() {
-    printf "Replacing project name:\n"
-    replace_all "ProjectName" "$PROJECT_NAME"
-    printf "\n"
-}
-
-function replace_root_namespace() {
-    printf "Replacing root namespace:\n"
-    printf "\n"
+    #grep -rl "$source" . | xargs sed -i "" "s/$source/$target/g" >> $LOG_FILE 2>&1
 }
 
 # tool execution workflow
-validate_arguments "$1" "$2" "$3"
+validate_arguments "$1" "$2" "$3" "$4"
 print_settings
 ask_confirmation
 
 # Used to calculate how long the script takes to execute. (https://www.safaribooksonline.com/library/view/shell-scripting-expert/9781118166321/c03-anchor-3.xhtml)
 SECONDS=0
 
-replace_project_name
-replace_root_namespace
+replace_all "projectName" "$PROJECT_NAME"
+replace_all "projectRootNamespace" "$ROOT_NAMESPACE"
+replace_all "projectAssemblyName" "$(echo "$ROOT_NAMESPACE" | awk '{print tolower($0)}')"
+replace_all "dbName" "$DB_NAME"
+set_auth_provider "$AUTH_PROVIDER"
 
 printf "\n"
 printf "Process completed \033[1;33m$SECONDS\033[0m seconds!\n"

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace projectRootNamespace.Api.Infrastructure.Controllers
 {
     [Route("/authentication")]
-    public class AuthenticationController : BaseController
+    public abstract class AuthenticationController : BaseController
     {
         private readonly IAuthenticationService _svc;
 
