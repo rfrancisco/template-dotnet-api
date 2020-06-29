@@ -188,12 +188,16 @@ function set_auth_provider() {
     if [ "$provider" = "lis" ]; then
         sed -i "" "s/\/\/services.AddLisAuthentication/services.AddLisAuthentication/g" Startup.cs
         sed -i "" "s/\/\/app.UseLisAuthentication/app.UseLisAuthentication/g" Startup.cs
+        sed -i "" "s/\/\/\[Authorize\]/\[Authorize\]/g" Infrastructure/BaseController.cs
+        sed -i "" "s/abstract class/class/g" Infrastructure/Controllers/AuthenticationController.cs
         return
     fi
 
     if [ "$provider" = "custom" ]; then
         sed -i "" "s/\/\/services.AddCustomAuthentication/services.AddCustomAuthentication/g" Startup.cs
         sed -i "" "s/\/\/app.UseCustomAuthentication/app.UseCustomAuthentication/g" Startup.cs
+        sed -i "" "s/\/\/\[Authorize\]/\[Authorize\]/g" Infrastructure/BaseController.cs
+        sed -i "" "s/abstract class/class/g" Infrastructure/Controllers/AuthenticationController.cs
         return
     fi
 }
@@ -201,7 +205,7 @@ function set_auth_provider() {
 function replace_all() {
     source=$1
     target=$2
-    #grep -rl "$source" . | xargs sed -i "" "s/$source/$target/g" >> $LOG_FILE 2>&1
+    grep -rl "$source" . | xargs sed -i "" "s/$source/$target/g" >> $LOG_FILE 2>&1
 }
 
 # tool execution workflow
