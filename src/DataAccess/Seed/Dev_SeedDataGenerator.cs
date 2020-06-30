@@ -12,6 +12,7 @@ namespace projectRootNamespace.Api.DataAccess.Seed
         {
             // TODO: Place your seed data here
             var products = new List<Product>();
+            var skus = new List<Sku>();
 
             var rnd = new Random();
 
@@ -22,8 +23,23 @@ namespace projectRootNamespace.Api.DataAccess.Seed
                     Id = i,
                     Name = $"Product #{i}",
                     Description = $"Description for product #{i}",
+                    CreatedBy = "unknown",
+                    CreatedOn = new DateTime(2020, 1, 1),
+                    UpdatedBy = "unknown",
+                    UpdatedOn = new DateTime(2020, 1, 1)
+                });
+            }
+
+            for (int i = 1; i <= 1000; i++)
+            {
+                skus.Add(new Sku()
+                {
+                    Id = i,
+                    Model = $"Model #{i}",
                     Price = rnd.NextDouble() * rnd.Next(1, 1000),
-                    Stock = rnd.Next(1, 10),
+                    Stock = rnd.Next(1, 100000),
+                    Size = (SkuSize)rnd.Next(0, 4),
+                    ProductId = rnd.Next(1, products.Count),
                     CreatedBy = "unknown",
                     CreatedOn = new DateTime(2020, 1, 1),
                     UpdatedBy = "unknown",
@@ -32,9 +48,11 @@ namespace projectRootNamespace.Api.DataAccess.Seed
             }
 
             modelBuilder.Entity<Product>().HasData(products);
+            modelBuilder.Entity<Sku>().HasData(skus);
             // Sets the start value for identity generated values
             // For details check: https://stackoverflow.com/questions/60187536/after-seeding-data-in-efcore-3-1-1-code-first-is-it-possible-to-set-identity-va)
             modelBuilder.Entity<Product>().Property(x => x.Id).HasIdentityOptions(products.Count + 1);
+            modelBuilder.Entity<Sku>().Property(x => x.Id).HasIdentityOptions(skus.Count + 1);
         }
     }
 }

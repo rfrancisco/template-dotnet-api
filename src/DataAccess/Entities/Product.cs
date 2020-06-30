@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 using projectRootNamespace.Api.Infrastructure.DataAccess;
 
 namespace projectRootNamespace.Api.DataAccess.Entities
@@ -11,10 +13,14 @@ namespace projectRootNamespace.Api.DataAccess.Entities
         [Required, MaxLength(1024)]
         public string Description { get; set; }
 
-        [Required]
-        public double Price { get; set; }
+        public ICollection<Sku> Skus { get; set; }
 
-        [Required]
-        public int Stock { get; set; }
+        public static void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Product>(e =>
+            {
+                e.HasIndex(p => p.Name).IsUnique();
+            });
+        }
     }
 }

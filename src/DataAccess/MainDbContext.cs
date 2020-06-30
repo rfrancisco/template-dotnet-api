@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using projectRootNamespace.Api.DataAccess.Seed;
 using projectRootNamespace.Api.Infrastructure.DataAccess;
+using projectRootNamespace.Api.DataAccess.Entities;
 
 namespace projectRootNamespace.Api.DataAccess
 {
@@ -18,6 +19,8 @@ namespace projectRootNamespace.Api.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // TODO: Call entities OnModelCreating methods here
+            Product.OnModelCreating(modelBuilder);
+            Sku.OnModelCreating(modelBuilder);
 
             base.OnModelCreating(modelBuilder);
 
