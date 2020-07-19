@@ -8,9 +8,9 @@ namespace projectRootNamespace.Api
 {
     public class Program
     {
-        public const string COMPONENT_TITLE = "projectName - Api";
-        public const string SERVER_URL = "http://0.0.0.0:5000";
-        public const string SERVER_BASE_URL = "api";
+        private const string COMPONENT_TITLE = "projectName - Api";
+        private const string SERVER_URL = "http://0.0.0.0:5000";
+        private const string SERVER_BASE_URL = "api";
 
         public static int Main(string[] args)
         {
@@ -35,29 +35,29 @@ namespace projectRootNamespace.Api
                 using (var host = CreateHostBuilder(args).Build())
                 {
                     var env = (IHostEnvironment)host.Services.GetService(typeof(IHostEnvironment));
-                    var logger = Log.ForContext<Program>();
-                    logger.Information(System.Reflection.Assembly.GetEntryAssembly().FullName);
-                    logger.Information("");
-                    logger.Information("--------------------------------------------------------------------------------");
-                    logger.Information(ComponentInfo.Title);
-                    logger.Information("");
-                    logger.Information("Api: {endpoint}", ComponentInfo.ServerUrl + "/" + ComponentInfo.ServerBaseUrl);
-                    logger.Information("Doc: {swagger}", ComponentInfo.ServerUrl + "/" + ComponentInfo.ServerBaseUrl + "/docs/");
-                    logger.Information("Env: {environment}", env.EnvironmentName);
-                    logger.Information("--------------------------------------------------------------------------------");
-                    logger.Information("");
-                    logger.Information("Starting...");
+                    var log = Log.ForContext<Program>();
+                    log.Information(System.Reflection.Assembly.GetEntryAssembly().FullName);
+                    log.Information("");
+                    log.Information("--------------------------------------------------------------------------------");
+                    log.Information(ComponentInfo.Title);
+                    log.Information("");
+                    log.Information("Api: {endpoint}", ComponentInfo.ServerUrl + "/" + ComponentInfo.ServerBaseUrl);
+                    log.Information("Doc: {swagger}", ComponentInfo.ServerUrl + "/" + ComponentInfo.ServerBaseUrl + "/docs/");
+                    log.Information("Env: {environment}", env.EnvironmentName);
+                    log.Information("--------------------------------------------------------------------------------");
+                    log.Information("");
+                    log.Information("Starting...");
 
                     // Starts the application synchronously
                     host.Start();
-                    logger.Information("Started!");
-                    logger.Information("Use Ctrl-C to exit...");
+                    log.Information("Started!");
+                    log.Information("Use Ctrl-C to exit...");
 
                     // Waits for the host to be terminated (using Ctrl-C for example)
                     host.WaitForShutdown();
-                    logger.Information("");
-                    logger.Information("So long, and thanks for all the fish!");
-                    logger.Information("");
+                    log.Information("");
+                    log.Information("So long, and thanks for all the fish!");
+                    log.Information("");
                 }
                 return 0;
             }

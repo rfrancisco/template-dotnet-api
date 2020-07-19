@@ -23,8 +23,6 @@ namespace projectRootNamespace.Api.Controllers
         /// <param name="page">(Optional) The page of records to retrieve.</param>
         /// <param name="pageSize">(Optional) The number of records per page to retrieve.</param>
         /// <returns>The list of records found.</returns>
-        /// <response code="401">Request is not unauthorized.</response>
-        /// <response code="403">Operation is forbidden.</response>
         /// <response code="200">Return the list of records found.</response>
         /// <response code="400">Bad request.</response>
         [HttpGet]
@@ -37,8 +35,6 @@ namespace projectRootNamespace.Api.Controllers
         /// <param name="productId">The id of the parent the record belons to.</param>
         /// <param name="skuId">The record unique identifier.</param>
         /// <returns>The record if found.</returns>
-        /// <response code="401">Request is not unauthorized.</response>
-        /// <response code="403">Operation is forbidden.</response>
         /// <response code="200">Return the record found.</response>
         /// <response code="400">Bad request.</response>
         /// <response code="404">Record not found.</response>
@@ -52,8 +48,6 @@ namespace projectRootNamespace.Api.Controllers
         /// <param name="productId">The id of the parent the record will belong to.</param>
         /// <param name="dto">The record creation dto.</param>
         /// <returns>The record that was created</returns>
-        /// <response code="401">Request is not unauthorized.</response>
-        /// <response code="403">Operation is forbidden.</response>
         /// <response code="201">Return the record created.</response>
         /// <response code="400">Bad request.</response>
         [HttpPost]
@@ -66,8 +60,6 @@ namespace projectRootNamespace.Api.Controllers
         /// <param name="productId">The id of the parent the record belons to.</param>
         /// <param name="skuId">The record unique identifier.</param>
         /// <param name="dto">The record update dto.</param>
-        /// <response code="401">Request is not unauthorized.</response>
-        /// <response code="403">Operation is forbidden.</response>
         /// <response code="204">Operation was successful.</response>
         /// <response code="400">Bad request.</response>
         /// <response code="404">Record not found.</response>
@@ -80,8 +72,6 @@ namespace projectRootNamespace.Api.Controllers
         /// </summary>
         /// <param name="productId">The id of the parent the record belons to.</param>
         /// <param name="skuId">The record unique identifier.</param>
-        /// <response code="401">Request is not unauthorized.</response>
-        /// <response code="403">Operation is forbidden.</response>
         /// <response code="204">Operation was successful.</response>
         /// <response code="400">Bad request.</response>
         /// <response code="404">Record not found.</response>

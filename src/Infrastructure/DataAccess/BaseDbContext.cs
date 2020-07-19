@@ -31,7 +31,8 @@ namespace projectRootNamespace.Api.Infrastructure.DataAccess
         {
             modelBuilder.HasPostgresExtension("uuid-ossp");
             modelBuilder.HasPostgresExtension("postgis");
-            modelBuilder.ApplyGlobalFilters<ISoftDeletableEntity>(x => !x.Deleted);
+            // Add a global filter to exclude deleted elements by default
+            modelBuilder.HasGlobalFilter<ISoftDeletableEntity>(x => !x.Deleted);
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

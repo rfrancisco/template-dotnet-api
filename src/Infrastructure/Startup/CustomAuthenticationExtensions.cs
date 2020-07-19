@@ -13,7 +13,7 @@ using projectRootNamespace.Api.Infrastructure.Security.CustomAuthentication;
 namespace projectRootNamespace.Api.Infrastructure.Startup
 {
     /// <summary>
-    /// Extension methods to setup lis integration
+    /// Extension methods to setup custom auth integration
     /// </summary>
     public static class CustomAuthenticationServiceCollectionExtensions
     {

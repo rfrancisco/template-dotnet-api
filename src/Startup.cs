@@ -30,8 +30,8 @@ namespace projectRootNamespace.Api
             //services.AddLisAuthentication(Configuration);
             //services.AddCustomAuthentication(Configuration);
             services.AddControllers();
-            services.AddCoreServices();
             services.AddCustomExceptionHandler();
+            services.AddCoreServices(ServiceLifetime.Scoped, "projectRootNamespace.Api.Services");
         }
 
         // This method gets called by the runtime.

@@ -8,7 +8,7 @@ namespace projectRootNamespace.Api.Infrastructure.DataAccess
 {
     public static class ModelBuilderExtension
     {
-        public static void ApplyGlobalFilters<T>(this ModelBuilder modelBuilder, Expression<Func<T, bool>> expression)
+        public static void HasGlobalFilter<T>(this ModelBuilder modelBuilder, Expression<Func<T, bool>> expression)
         {
             var entities = modelBuilder.Model
                 .GetEntityTypes()

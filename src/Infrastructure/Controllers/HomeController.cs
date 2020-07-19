@@ -54,16 +54,5 @@ namespace projectRootNamespace.Api.Infrastructure.Controllers
                 Content = view
             };
         }
-
-        /// <summary>
-        /// Get the version of this component
-        /// </summary>
-        /// <response code="200">Returns component version.</response>
-        [HttpGet("version")]
-        [SwaggerOperation(Tags = new[] { "Component" })]
-        public string GetVersion()
-        {
-            return _settings.Version;
-        }
     }
 }

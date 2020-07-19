@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace projectRootNamespace.Api.Infrastructure.Startup
 {
@@ -21,11 +24,7 @@ namespace projectRootNamespace.Api.Infrastructure.Startup
                 var xmlFile = (new Program()).GetType().Assembly.ManifestModule.Name.Replace(".dll", ".xml");
                 var xmlPath = Path.Combine(basePath, xmlFile);
                 options.IncludeXmlComments(xmlPath);
-
-                // Enable the use of SwaggerOperation annotations
                 options.EnableAnnotations();
-
-                // Allow authentication using a jwt token
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
@@ -34,24 +33,7 @@ namespace projectRootNamespace.Api.Infrastructure.Startup
                     Type = SecuritySchemeType.ApiKey,
                     Scheme = "Bearer"
                 });
-                options.AddSecurityRequirement(new OpenApiSecurityRequirement()
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            },
-                            Scheme = "oauth2",
-                            Name = "Bearer",
-                            In = ParameterLocation.Header,
-                        },
-                        new List<string>()
-                    }
-                });
-
+                options.OperationFilter<SecurityRequirementsOperationFilter>();
             });
         }
     }
@@ -71,6 +53,52 @@ namespace projectRootNamespace.Api.Infrastructure.Startup
                 options.InjectStylesheet("custom.css");
                 options.InjectJavascript("custom.js");
             });
+        }
+    }
+
+    public class SecurityRequirementsOperationFilter : IOperationFilter
+    {
+        public void Apply(OpenApiOperation operation, OperationFilterContext context)
+        {
+            var requiresAuthorization = context.MethodInfo.DeclaringType
+                .GetCustomAttributes(true)
+                .Union(context.MethodInfo.GetCustomAttributes(true))
+                .OfType<AuthorizeAttribute>()
+                .Any();
+            var allowAnonymous = context.MethodInfo.DeclaringType
+                .GetCustomAttributes(true)
+                .Union(context.MethodInfo.GetCustomAttributes(true))
+                .OfType<AllowAnonymousAttribute>()
+                .Any();
+
+            if (requiresAuthorization && !allowAnonymous)
+            {
+                if (!operation.Responses.ContainsKey("401"))
+                    operation.Responses.Add("401", new OpenApiResponse { Description = "Unauthorized :)" });
+                if (!operation.Responses.ContainsKey("403"))
+                    operation.Responses.Add("403", new OpenApiResponse { Description = "Forbidden :)" });
+
+                operation.Security = new List<OpenApiSecurityRequirement>
+                {
+                    new OpenApiSecurityRequirement()
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                },
+                                Scheme = "oauth2",
+                                Name = "Bearer",
+                                In = ParameterLocation.Header,
+                            },
+                            new List<string>()
+                        }
+                    }
+                };
+            }
         }
     }
 }

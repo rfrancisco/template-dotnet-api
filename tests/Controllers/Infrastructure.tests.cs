@@ -17,7 +17,6 @@ namespace projectRootNamespace.Api.Tests
         [Theory]
         [InlineData("/")]
         [InlineData("/health")]
-        [InlineData("/version")]
         [InlineData("/docs")]
         public async Task Get_Should_Return_Success_Status_Code(string url)
         {
